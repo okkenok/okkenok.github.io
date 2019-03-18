@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Android 消息机制记忆点：消息机制 -&amp;gt; Handler更新UI -&amp;gt; 主要相关类：  Message：需要传递的信息，可以传递数据 MessageQueue：消息队列，但不是队列，内部实现为一个单链表的数据结构，因为单链表在插入和删除上比较有优势。主要功能：向消息池投递消息MessageQueue.enqueueMessage和取走消息池的消息MessageQueue.next">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 消息机制">
+<meta property="og:url" content="http://yoursite.com/2019/03/19/Android-消息机制/index.html">
+<meta property="og:site_name" content="Okkenok">
+<meta property="og:description" content="Android 消息机制记忆点：消息机制 -&amp;gt; Handler更新UI -&amp;gt; 主要相关类：  Message：需要传递的信息，可以传递数据 MessageQueue：消息队列，但不是队列，内部实现为一个单链表的数据结构，因为单链表在插入和删除上比较有优势。主要功能：向消息池投递消息MessageQueue.enqueueMessage和取走消息池的消息MessageQueue.next">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3985563-d7da4f5ba49f6887.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3985563-6c25004471646c1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/731/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3985563-b3295b67a2b0477f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/902/format/webp">
+<meta property="og:updated_time" content="2019-03-18T16:03:03.624Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 消息机制">
+<meta name="twitter:description" content="Android 消息机制记忆点：消息机制 -&amp;gt; Handler更新UI -&amp;gt; 主要相关类：  Message：需要传递的信息，可以传递数据 MessageQueue：消息队列，但不是队列，内部实现为一个单链表的数据结构，因为单链表在插入和删除上比较有优势。主要功能：向消息池投递消息MessageQueue.enqueueMessage和取走消息池的消息MessageQueue.next">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3985563-d7da4f5ba49f6887.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600/format/webp">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Android 消息机制</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/02/20/hello-world/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/19/Android-消息机制/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/19/Android-消息机制/&text=Android 消息机制"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/19/Android-消息机制/&is_video=false&description=Android 消息机制"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android 消息机制&body=Check out this article: http://yoursite.com/2019/03/19/Android-消息机制/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/19/Android-消息机制/&name=Android 消息机制&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-消息机制"><span class="toc-number">1.</span> <span class="toc-text">Android 消息机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#记忆点："><span class="toc-number">1.1.</span> <span class="toc-text">记忆点：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息机制源码解析："><span class="toc-number">1.2.</span> <span class="toc-text">消息机制源码解析：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Looper"><span class="toc-number">1.2.1.</span> <span class="toc-text">Looper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建-Handler："><span class="toc-number">1.2.2.</span> <span class="toc-text">创建 Handler：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发送消息："><span class="toc-number">1.2.3.</span> <span class="toc-text">发送消息：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取消息"><span class="toc-number">1.2.4.</span> <span class="toc-text">获取消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分发消息"><span class="toc-number">1.2.5.</span> <span class="toc-text">分发消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图解"><span class="toc-number">1.3.</span> <span class="toc-text">图解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他知识"><span class="toc-number">1.4.</span> <span class="toc-text">其他知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">1.5.</span> <span class="toc-text">参考引用</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Android 消息机制
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Okkenok</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-18T16:00:56.000Z" itemprop="datePublished">2019-03-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Android-消息机制"><a href="#Android-消息机制" class="headerlink" title="Android 消息机制"></a>Android 消息机制</h1><h2 id="记忆点："><a href="#记忆点：" class="headerlink" title="记忆点："></a>记忆点：</h2><p>消息机制 -&gt; Handler更新UI -&gt; 主要相关类：</p>
+<ol>
+<li>Message：需要传递的信息，可以传递数据</li>
+<li>MessageQueue：消息队列，但不是队列，内部实现为一个单链表的数据结构，因为单链表在插入和删除上比较有优势。主要功能：向消息池投递消息<code>MessageQueue.enqueueMessage</code>和取走消息池的消息<code>MessageQueue.next</code></li>
+<li>Handler：消息辅助类，主要功能：向消息池发送各种消息事件<code>handler.sendMessage</code>和处理响应消息事件<code>handler.handleMessage</code></li>
+<li>Looper：不断循环执行<code>Looper.loop</code>，从 MessageQueue 中读取消息，按分发机制将消息分发给目标处者</li>
+</ol>
+<p>-&gt; 运行流程：</p>
+<blockquote>
+<p>在子线程执行完耗时操作，当Handler发送消息时，将会调用<code>MessageQueue.enqueueMessage</code>,向消息队列中添加消息。当通过<code>Looper.loop</code>开启循环后，会不断从线程池中读取消息，即调用<code>MessageQueue.next</code>，然后调用目标 Handler （即发送该消息的 Handler)的<code>dispatchMessage</code>方法传递消息，然后返回到 Handler 所在线程，目标 Handler 收到消息，调用<code>handleMessage</code>方法，接收消息，处理消息。</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/3985563-d7da4f5ba49f6887.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/600/format/webp" alt="运行流程"></p>
+<p>-&gt; MessageQueue，Handler 和 Looper 三者之间的关系：</p>
+<blockquote>
+<p>一个线程一个 Looper，可以有多个 Handler，Looper 中维护一个 MessageQueue 来维护消息队列，消息队列中的 Message 可以来自不同 Handler。</p>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/3985563-6c25004471646c1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/731/format/webp" alt="消息机制整体架构图"></p>
+<h2 id="消息机制源码解析："><a href="#消息机制源码解析：" class="headerlink" title="消息机制源码解析："></a>消息机制源码解析：</h2><h3 id="Looper"><a href="#Looper" class="headerlink" title="Looper"></a>Looper</h3><p>初始化：default：<code>prepare(true)</code>，布尔值表示的是这个 Looper 是否可以退出。还限制不能重复创建 Looper。</p>
+<p>开启 Looper：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">final</span> Looper me = myLooper(); <span class="comment">//获取TLS存储的Looper对象</span></span><br><span class="line">  <span class="keyword">if</span>(me == <span class="keyword">null</span>)&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeExceprion(<span class="string">"No Looper; Looper.prepare() wasn't called on this thread"</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">final</span> MesssageQueue queue = me.mQueue; <span class="comment">//Looper中对象中的消息队列</span></span><br><span class="line">  ...</span><br><span class="line">  <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">    Message msg = queue.next(); <span class="comment">//可能会阻塞，因为next()方法可能会无限循环</span></span><br><span class="line">    ... <span class="comment">//判空、日志处理</span></span><br><span class="line">    msg.target.dispatchMessage(msg); <span class="comment">// msg.target:目标Handler</span></span><br><span class="line">    ...</span><br><span class="line">    msg.recycleUnchecked();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="创建-Handler："><a href="#创建-Handler：" class="headerlink" title="创建 Handler："></a>创建 Handler：</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">this</span>(<span class="keyword">null</span>, <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Callback callback, <span class="keyword">boolean</span> async)</span></span>&#123;</span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">   <span class="comment">//若在主线程，系统已经帮我们 Looper.prepareMainLooper(); Looper.loop();并且Looper是不可退出的；其他线程需调用Looper.prepare()</span></span><br><span class="line">  mLooper = Looper.myLooper();</span><br><span class="line">  <span class="keyword">if</span>(mLooper == <span class="keyword">null</span>)&#123;</span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeExceprion(<span class="string">""</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  mQueue = mLooper.mQueue;</span><br><span class="line">  mCallback = callback;</span><br><span class="line">  mAsynchronous = async;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="发送消息："><a href="#发送消息：" class="headerlink" title="发送消息："></a>发送消息：</h3><p>Handler的<code>send</code>或<code>post</code>方式最终都是调用了<code>sendMessageAtTime()</code>。内部大致流程：<code>sendMessageAtTime(msg, uptimeMillis)</code>-&gt;<code>enqueueMessage(queue, msg, uptimeMillis)</code>-&gt;<code>queue.enqueueMessage(msg, uptimeMillis)</code>其中 queue 是以 mQueue 赋值的局部变量，而 mQueue 是消息队列，是从 Looper 中获取的<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// MessageQueue enqueueMessage() 方法的具体逻辑</span></span><br><span class="line"><span class="function"><span class="keyword">boolean</span> <span class="title">enqueueMessage</span><span class="params">(Message msg, <span class="keyword">long</span> when)</span></span>&#123;</span><br><span class="line">  ...<span class="comment">// 判空、msg是否已被使用</span></span><br><span class="line">  <span class="keyword">synchronized</span>(<span class="keyword">this</span>)&#123;</span><br><span class="line">    <span class="keyword">if</span>(mQuitting)&#123; <span class="comment">//正在退出时，回收msg，加入到消息池</span></span><br><span class="line">      msg.recycle();</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    msg.markInUse();</span><br><span class="line">    msg.when = when;</span><br><span class="line">    Message p = mMessages;</span><br><span class="line">    <span class="keyword">boolean</span> needWake;</span><br><span class="line">    <span class="keyword">if</span>(p == <span class="keyword">null</span> || when == <span class="number">0</span> || when &lt; p.when)&#123;</span><br><span class="line">      <span class="comment">//p为null(代表MessageQueue没有消息)或者msg的触发时间是队列中最早的</span></span><br><span class="line">      msg.next = p;</span><br><span class="line">      mMessages = msg;</span><br><span class="line">      needWake = mBlocked;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="comment">// 一般地，不需要唤醒事件队列，除非消息队头存在barrier，并且同时Message是队列中最早的异步消息</span></span><br><span class="line">      needWake = mBlocked &amp;&amp; p.target == <span class="keyword">null</span> &amp;&amp; msg.isAsynchronous();</span><br><span class="line">      Message prev;</span><br><span class="line">      <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">        <span class="comment">// 将消息按触发时间顺序插入到MessageQueue</span></span><br><span class="line">        prev = p;</span><br><span class="line">        p = p.next;</span><br><span class="line">        <span class="keyword">if</span>(p == <span class="keyword">null</span> || when &lt; p.when)&#123;</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(needWake &amp;&amp; p.isAsynchronous())&#123;</span><br><span class="line">          needWake = <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      msg.next = p;</span><br><span class="line">      prev.next = msg;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(needWake)&#123;</span><br><span class="line">      nativeWake(mPtr);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="获取消息"><a href="#获取消息" class="headerlink" title="获取消息"></a>获取消息</h3><p>发送消息之后，在 MessageQueue 维护了消息队列，然后再 Looper 中通过<code>loop()</code>不断地获取消息。<code>loop()</code>-&gt;<code>queue.next()</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Messsage <span class="title">next</span><span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">final</span> <span class="keyword">long</span> ptr = mPtr;</span><br><span class="line">  <span class="keyword">if</span>(ptr == <span class="number">0</span>)&#123; <span class="comment">//当消息循环已经退出，则直接返回</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">int</span> pendingIdleHandlerCount = -<span class="number">1</span>; <span class="comment">//循环迭代的首次为-1</span></span><br><span class="line">  <span class="keyword">int</span> nextPollTimeoutMillis = <span class="number">0</span>;</span><br><span class="line">  <span class="keyword">for</span>(;;)&#123;</span><br><span class="line">    <span class="keyword">if</span>(nextPollTimeoutMillis != <span class="number">0</span>)&#123;</span><br><span class="line">      Binder.flushPendingConmmands();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//阻塞操作，当等待nextPollTimeoutMillis时长，或者消息队列被唤醒，都会返回</span></span><br><span class="line">    nativePollOnce(ptr, nextPollTimeoutMillis);</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>)&#123;</span><br><span class="line">      <span class="keyword">final</span> <span class="keyword">long</span> now = SystemClock.uptimeMillis();</span><br><span class="line">      Message prevMsg = <span class="keyword">null</span>;</span><br><span class="line">      Message msg = mMessages; <span class="comment">// mMessages保存链表的第一个元素</span></span><br><span class="line">      <span class="keyword">if</span>(msg != <span class="keyword">null</span> &amp;&amp; msg.target == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="comment">//当消息Handler为null时，查询MessageQueue中的下一条异步消息msg，为空则退出循环</span></span><br><span class="line">        <span class="keyword">do</span>&#123;</span><br><span class="line">          prevMsg = msg;</span><br><span class="line">          msg = msg.next;</span><br><span class="line">        &#125;<span class="keyword">while</span>(msg != <span class="keyword">null</span> &amp;&amp; !msg.isAsynchronous());</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(msg != <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">if</span>(now &lt; msg.when)&#123;</span><br><span class="line">          <span class="comment">//当异步消息触发时间大于当前时间，则设置下一次轮询的超时时长</span></span><br><span class="line">          nextPollTimeoutMillis = (<span class="keyword">int</span>)Math.min(msg.when - now, Integer.MAX_VALUE);</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//获取一条信息并返回</span></span><br><span class="line">          mBlocked = <span class="keyword">false</span>;</span><br><span class="line">          <span class="keyword">if</span>(prevMsg != <span class="keyword">null</span>)&#123;</span><br><span class="line">            prevMsg.next = msg.next;</span><br><span class="line">          &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            mMessages = msg.next;</span><br><span class="line">          &#125;</span><br><span class="line">          msg.next = <span class="keyword">null</span>;</span><br><span class="line">          <span class="comment">//设置消息的使用状态，即flages |= FLAG_IN_USE</span></span><br><span class="line">          msg.markInUse();</span><br><span class="line">          <span class="keyword">return</span> msg;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">        nextPollTimeoutMillis = -<span class="number">1</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(mQuitting)&#123;</span><br><span class="line">        dispose();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="分发消息"><a href="#分发消息" class="headerlink" title="分发消息"></a>分发消息</h3><p>在<code>loop()</code>方法中，获取到下一条消息后，执行<code>msg.target.dispatchMessage(msg)</code>，来分发消息到目标 Handler。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">dispatchMessage</span><span class="params">(Message msg)</span></span>&#123;</span><br><span class="line">  <span class="comment">//消息分发的优先级</span></span><br><span class="line">  <span class="keyword">if</span>(msg.callback != <span class="keyword">null</span>)&#123;</span><br><span class="line">    handleCallback(msg);</span><br><span class="line">  &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(mCallback != <span class="keyword">null</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(mCallback.handleMessage(msg))&#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    handleMessage(msg); <span class="comment">//很多情况下分发消息的处理方法为这个</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><p><img src="https://upload-images.jianshu.io/upload_images/3985563-b3295b67a2b0477f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/902/format/webp" alt="消息机制"></p>
+<h2 id="其他知识"><a href="#其他知识" class="headerlink" title="其他知识"></a>其他知识</h2><ol>
+<li>ThreaLocal：每并不是一个 Thread，而是 Thread 的局部变量。当使用 ThreadLocal 维护变量时，ThreadLocal 为每个使用该变量的线程提供独立的变量副本，所以每一个线程都可以独立地改变自己的副本，而不会影响其它线程所对应的副本。从线程的角度看，目标变量就象是线程的本地变量，这也是类名中 Local 所要表达的意思</li>
+<li>Android 中主线程为什么不会被 Looper.loop() 死循环卡死？——保证程序一直执行，thread.attach(false)；创建 Binder 通道（新线程，接收 AMS 发送来的事件）；承载 ActivityThread 的主线程就是由 Zygote fork 而创建的进程；不耗 CPU 资源，涉及到 pipe/epoll 机制；Activity 的内部类 H 继承于 Handler，Activity 的生命周期都是依靠主线程的 Looper.loop，当收到不同的 Message 时采取相应的措施。</li>
+</ol>
+<hr>
+<h2 id="参考引用"><a href="#参考引用" class="headerlink" title="参考引用"></a>参考引用</h2><p> <a href="https://www.jianshu.com/p/f10cff5b4c25" target="_blank" rel="noopener">Android消息机制的原理及源码解析</a></p>
+<p> <a href="https://www.zhihu.com/question/34652589" target="_blank" rel="noopener">Android中为什么主线程不会因为Looper.loop()里的死循环卡死？</a></p>
+<p> <a href="https://juejin.im/entry/57fb3c53128fe100546ea4f2" target="_blank" rel="noopener">Android Handler 消息机制（解惑篇）</a></p>
+
+  </div>
+</article>
+
+	<div class="blog-post-comments">
+        
+        
+        <div class="vcomment"></div>
+        
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-消息机制"><span class="toc-number">1.</span> <span class="toc-text">Android 消息机制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#记忆点："><span class="toc-number">1.1.</span> <span class="toc-text">记忆点：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#消息机制源码解析："><span class="toc-number">1.2.</span> <span class="toc-text">消息机制源码解析：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Looper"><span class="toc-number">1.2.1.</span> <span class="toc-text">Looper</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建-Handler："><span class="toc-number">1.2.2.</span> <span class="toc-text">创建 Handler：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#发送消息："><span class="toc-number">1.2.3.</span> <span class="toc-text">发送消息：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#获取消息"><span class="toc-number">1.2.4.</span> <span class="toc-text">获取消息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#分发消息"><span class="toc-number">1.2.5.</span> <span class="toc-text">分发消息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#图解"><span class="toc-number">1.3.</span> <span class="toc-text">图解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他知识"><span class="toc-number">1.4.</span> <span class="toc-text">其他知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">1.5.</span> <span class="toc-text">参考引用</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/19/Android-消息机制/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/19/Android-消息机制/&text=Android 消息机制"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/19/Android-消息机制/&is_video=false&description=Android 消息机制"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android 消息机制&body=Check out this article: http://yoursite.com/2019/03/19/Android-消息机制/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/19/Android-消息机制/&title=Android 消息机制"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/19/Android-消息机制/&name=Android 消息机制&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 黄耿
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script type="text/javascript">
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+      return GUEST_INFO.indexOf(item) > -1
+    });
+    guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "QkzLlK1k0KOnWTQtGcA7pnfP-gzGzoHsz",
+        appKey: "3x2y811wfs2AtVQEz7kKeMhL",
+        avatar:"mm",
+        placeholder: "say somethings ?",
+        guest_info:guest_info,
+        pageSize:"10"
+    })
+</script>
+ 
+</body>
+</html>
