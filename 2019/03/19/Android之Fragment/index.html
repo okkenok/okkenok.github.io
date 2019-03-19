@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Android 之 Fragment为什么 Fragment ？为了让界面在平板上更好地展示；代码复用；Activity 可用来管理 Fragment；可控性更好，可以像普通对象那样自由地创建和控制，传递参数更加容易方便，也不用处理系统相关的事情，显示方式、替换、不管整体还是部分，都可以做到相应的更改；可作为 View Controllers 添加 Fragment123456&amp;lt;fragme">
+<meta name="keywords" content="Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android之Fragment">
+<meta property="og:url" content="http://yoursite.com/2019/03/19/Android之Fragment/index.html">
+<meta property="og:site_name" content="Okkenok">
+<meta property="og:description" content="Android 之 Fragment为什么 Fragment ？为了让界面在平板上更好地展示；代码复用；Activity 可用来管理 Fragment；可控性更好，可以像普通对象那样自由地创建和控制，传递参数更加容易方便，也不用处理系统相关的事情，显示方式、替换、不管整体还是部分，都可以做到相应的更改；可作为 View Controllers 添加 Fragment123456&amp;lt;fragme">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/788498-ccde260e66ecceda.jpg">
+<meta property="og:updated_time" content="2019-03-19T11:52:46.612Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android之Fragment">
+<meta name="twitter:description" content="Android 之 Fragment为什么 Fragment ？为了让界面在平板上更好地展示；代码复用；Activity 可用来管理 Fragment；可控性更好，可以像普通对象那样自由地创建和控制，传递参数更加容易方便，也不用处理系统相关的事情，显示方式、替换、不管整体还是部分，都可以做到相应的更改；可作为 View Controllers 添加 Fragment123456&amp;lt;fragme">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/788498-ccde260e66ecceda.jpg">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Android之Fragment</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/03/19/Android之Service/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/03/19/Android之Activity/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/19/Android之Fragment/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/19/Android之Fragment/&text=Android之Fragment"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/19/Android之Fragment/&is_video=false&description=Android之Fragment"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android之Fragment&body=Check out this article: http://yoursite.com/2019/03/19/Android之Fragment/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/19/Android之Fragment/&name=Android之Fragment&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-之-Fragment"><span class="toc-number">1.</span> <span class="toc-text">Android 之 Fragment</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么-Fragment-？"><span class="toc-number">1.1.</span> <span class="toc-text">为什么 Fragment ？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加-Fragment"><span class="toc-number">1.2.</span> <span class="toc-text">添加 Fragment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fragment-生命周期"><span class="toc-number">1.3.</span> <span class="toc-text">Fragment 生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通信方式："><span class="toc-number">1.4.</span> <span class="toc-text">通信方式：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他知识点"><span class="toc-number">1.5.</span> <span class="toc-text">其他知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#回退栈管理"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">回退栈管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fragment-与-ActionBar-和-MenuItem"><span class="toc-number">1.5.0.2.</span> <span class="toc-text">Fragment 与 ActionBar 和 MenuItem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#没有布局的-Fragment-——-保存大数据"><span class="toc-number">1.5.0.3.</span> <span class="toc-text">没有布局的 Fragment —— 保存大数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DialogFragment-的使用"><span class="toc-number">1.5.0.4.</span> <span class="toc-text">DialogFragment 的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fragment-的startActivityForResult"><span class="toc-number">1.5.0.5.</span> <span class="toc-text">Fragment 的startActivityForResult</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fragment-add-amp-replace"><span class="toc-number">1.5.0.6.</span> <span class="toc-text">Fragment add &amp; replace</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">1.6.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Android之Fragment
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Okkenok</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-19T11:51:02.000Z" itemprop="datePublished">2019-03-19</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android/">Android</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="Android-之-Fragment"><a href="#Android-之-Fragment" class="headerlink" title="Android 之 Fragment"></a>Android 之 Fragment</h1><h2 id="为什么-Fragment-？"><a href="#为什么-Fragment-？" class="headerlink" title="为什么 Fragment ？"></a>为什么 Fragment ？</h2><p>为了让界面在平板上更好地展示；代码复用；Activity 可用来管理 Fragment；可控性更好，可以像普通对象那样自由地创建和控制，传递参数更加容易方便，也不用处理系统相关的事情，显示方式、替换、不管整体还是部分，都可以做到相应的更改；可作为 View Controllers</p>
+<h2 id="添加-Fragment"><a href="#添加-Fragment" class="headerlink" title="添加 Fragment"></a>添加 Fragment</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">fragment</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:id</span>=<span class="string">"@+id/fragment1"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:name</span>=<span class="string">"com.example.fragmentdemo.Fragment1"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:layout_width</span>=<span class="string">"0dip"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">android:layout_weight</span>=<span class="string">"1"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Fragment1 fragment1 = <span class="keyword">new</span> Fragment1();</span><br><span class="line">getFragmentManager().beginTransaction().replace(R.id.main_layout, fragment1).commit();</span><br></pre></td></tr></table></figure>
+<h2 id="Fragment-生命周期"><a href="#Fragment-生命周期" class="headerlink" title="Fragment 生命周期"></a>Fragment 生命周期</h2><p><img src="https://upload-images.jianshu.io/upload_images/788498-ccde260e66ecceda.jpg" alt="Fragment 生命周期"></p>
+<p>几个新方法：</p>
+<ul>
+<li><code>onAttach()</code>：Fragment 和 Activity 建立关联的时候调用</li>
+<li><code>onCreateView()</code>：为 Fragment 加载布局时调用</li>
+<li><code>onActivityCreated()</code>：当 Activity 中的<code>onCreate()</code>执行完调用</li>
+<li><code>onDestroyView()</code>：Fragment 中的布局被移除时调用</li>
+<li><code>onDetach()</code>：Fragment 和 Activity 解除关联时调用</li>
+</ul>
+<p>注意一点：除了<code>onCreateView()</code>，其他方法必须调用父类对于该方法的实现。</p>
+<h2 id="通信方式："><a href="#通信方式：" class="headerlink" title="通信方式："></a>通信方式：</h2><ol>
+<li><p>直接在一个 Fragment 中调用另外一个 Fragment 中的方法。适用于布局文件已定义了的 Fragment。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Fragment1 f1 = (Fragment1) getActivity().getFragmentManager().findFragmentById(R.id.fragment1);</span><br><span class="line">fi.func();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IFunc</span></span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Activity1</span> <span class="keyword">implements</span> <span class="title">IFunc</span></span>&#123;</span><br><span class="line">  ...</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">func</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Fragment1</span> <span class="keyword">extends</span> <span class="title">Fragment</span></span>&#123;</span><br><span class="line">  <span class="keyword">private</span> IFunc mCallback;</span><br><span class="line">  ...</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAttach</span><span class="params">(Activity activity)</span></span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onAttach(activity);</span><br><span class="line">    <span class="keyword">if</span>(activity != <span class="keyword">null</span>)&#123;</span><br><span class="line">      mCallback = (IFunc) activity; <span class="comment">// then you can use mCallback to do something</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>广播</li>
+<li><code>getActivity()</code>Fragment 中直接调用 Activity 中的公开方法；</li>
+<li><code>onAttach()</code>之前可以调用<code>fragment.setArguments(bundle)</code>；Activity 中可有 Fragment 的引用；</li>
+<li>Eventbus、数据存储等其他方式；</li>
+</ol>
+<p><strong><code>getActivity()</code>为 null</strong>：异步网络请求的回调中调用此方法会出现空指针的问题。如果 APP 长时间在后台运行，再次进入可能会出现 crash，而且 fragment 会有重叠现象。如果系统内存不足、切换横竖屏、APP 长时间后台运行，<strong>Activity 都可能被系统回收然后重建，但 Fragment 并不会随着 Activity 的回收而被回收，创建的所有 Fragment 会被保存到 Bundle 里面，从而导致 Fragment 丢失对应承载它的 Activity。</strong>  </p>
+<p>解决方法：可在<code>onAttach()</code>获取 Activity 上下文；重叠问题的解决：1.想办法不让 Activity 意外退出重建时保存信息<code>//super.onSaveInstanceState(outState);</code>(不推荐)；2.旋转屏幕时等场景不让 Activity 走生命周期方法<code>android:configChanges=&quot;keyboardHidden|orientation|screenSize&quot;</code>；3.当 Activity 恢复时，取出保存的 Fragment 重新加入即可，即保留了 Activity 的视图状态，也完美地解决了重叠问题。</p>
+<h2 id="其他知识点"><a href="#其他知识点" class="headerlink" title="其他知识点"></a>其他知识点</h2><h4 id="回退栈管理"><a href="#回退栈管理" class="headerlink" title="回退栈管理"></a>回退栈管理</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Fragment f = <span class="keyword">new</span> Fragment();</span><br><span class="line">FragmentManager fm = getSupportFragmentManager();</span><br><span class="line">FragmentTransaction ftx = fm.beginTransactoin();</span><br><span class="line">ftx.replace(R.id.fragment_container, f, <span class="string">"ONE"</span>); <span class="comment">// Fragment 实例不会被销毁，但是视图层次会被销毁，即会调用 onDestroyView 和 onCreateView</span></span><br><span class="line">ftx.addToBackStack(<span class="keyword">null</span>); <span class="comment">//将当前事务添加到回退栈</span></span><br><span class="line">ftx.commit();</span><br></pre></td></tr></table></figure>
+<h4 id="Fragment-与-ActionBar-和-MenuItem"><a href="#Fragment-与-ActionBar-和-MenuItem" class="headerlink" title="Fragment 与 ActionBar 和 MenuItem"></a>Fragment 与 ActionBar 和 MenuItem</h4><p>a. 在 Fragment 的<code>onCreate()</code>调用<code>setHasOptionsMenu(true)</code><br>b. 然后再 Fragment 类中实现 <code>onCrateOptionsMenu()</code><br>c. 如果希望在 Fragment 中处理 MenuItem 的点击，也可以实现<code>onOptionsItemSelected()</code>，Activity 也可以直接处理该 MenuItem 的点击事件。</p>
+<h4 id="没有布局的-Fragment-——-保存大数据"><a href="#没有布局的-Fragment-——-保存大数据" class="headerlink" title="没有布局的 Fragment —— 保存大数据"></a>没有布局的 Fragment —— 保存大数据</h4><p>主要用于处理异步请求带来的数据保存问题，尤其是异步请求未完成时屏幕旋转这种现象  </p>
+<ol>
+<li>继承 Fragment，声明引用指向你的有状态的对象</li>
+<li>当 Fragment 创建时<code>onCreate()</code>调用<code>setRetainInstance(boolean)</code></li>
+<li>把 Fragment 实例添加到 Activity 中</li>
+<li>当 Activity 重新启动后，使用 FragmentManager 对 Fragment 进行恢复</li>
+</ol>
+<h4 id="DialogFragment-的使用"><a href="#DialogFragment-的使用" class="headerlink" title="DialogFragment 的使用"></a>DialogFragment 的使用</h4><ol>
+<li>新建对话框布局文件</li>
+<li>继承 DialogFragment 重写<code>onCreateDialog()</code></li>
+<li><code>dialog.show(getFragmentManager(), &quot;testDialog&quot;);</code></li>
+</ol>
+<h4 id="Fragment-的startActivityForResult"><a href="#Fragment-的startActivityForResult" class="headerlink" title="Fragment 的startActivityForResult"></a>Fragment 的<code>startActivityForResult</code></h4><ol>
+<li>只嵌套了一层 Fragment：Fragment 中使用时，不要使用<code>getActivity().startActivityForResult()</code>,而是应该直接使用；如果 Activity 中重写了<code>onActivityResult()</code>，其中一定要加上<code>super.onActivityResult()</code>。若违反，则只能传递到 Activity 中而不能到达 Fragment 中的<code>onActivityResult()</code>。</li>
+<li>嵌套多层 Fragment：此时是不能传递到第二层的 Fragment 中的。可以通过 FragmentManager 递归调用<code>fragment.onActivityResult()</code>。同样需要注意1.中的限制</li>
+<li><strong>在所有的 Fragment 中若是直接使用<code>startActivityForResult()</code>，那么传到 Activity 的<code>onActivityResult()</code>中的 requestCode 就会不对，resultCode 是对的，当然，传到 Fragment 中也会如此。若是用<code>getActivity().startActivityForResult()</code>则都会是正确的。当然若是直接返回键返回，那么会自动给一个 resultCode，在重写的时候需要判定 resultCode。</strong></li>
+</ol>
+<h4 id="Fragment-add-amp-replace"><a href="#Fragment-add-amp-replace" class="headerlink" title="Fragment add &amp; replace"></a>Fragment <code>add</code> &amp; <code>replace</code></h4><p>两种方法不同之处：是否要清空容器再添加 Fragment 的区别，用法上<code>add</code>配合<code>hide</code>或者<code>remove</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FragmentTransaction ft = getFragmentManager().beginTransaction();</span><br><span class="line"></span><br><span class="line">ft.add(R.id.fragment_container, fragment1).hide(fragment2).commit();</span><br><span class="line"></span><br><span class="line">ft.replace(R.id.fragment_container, fragment1).commit();</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="参考引用"><a href="#参考引用" class="headerlink" title="参考引用"></a>参考引用</h2><p> <a href="https://www.jianshu.com/p/14032a5f72ac" target="_blank" rel="noopener">对于Fragment的一些理解</a><br> <a href="https://blog.csdn.net/guolin_blog/article/details/8881711" target="_blank" rel="noopener">Android Fragment完全解析，关于碎片你所需知道的一切</a><br> <a href="https://blog.csdn.net/qq_24442769/article/details/77679147" target="_blank" rel="noopener">Android Fragment学习与使用—高级篇</a><br> <a href="https://www.jianshu.com/p/14032a5f72ac" target="_blank" rel="noopener">对于Fragment的一些理解</a><br> <a href="https://blog.csdn.net/u012702547/article/details/49786417" target="_blank" rel="noopener">关于Fragment与Fragment、Activity通信的四种方式</a><br> <a href="https://blog.csdn.net/goodlixueyong/article/details/48715661" target="_blank" rel="noopener">Fragment中调用getActivity为null的问题</a><br> <a href="https://blog.csdn.net/yuzhiqiang_1993/article/details/75014591" target="_blank" rel="noopener">fragment重叠的完美解决方案</a><br> <a href="https://www.cnblogs.com/tangZH/p/5930491.html" target="_blank" rel="noopener">谈谈Fragment中的onActivityResult</a><br> <a href="https://blog.csdn.net/ahou2468/article/details/79708286" target="_blank" rel="noopener">Fragment add replace 区别</a></p>
+
+  </div>
+</article>
+
+	<div class="blog-post-comments">
+        
+        
+        <div class="vcomment"></div>
+        
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Android-之-Fragment"><span class="toc-number">1.</span> <span class="toc-text">Android 之 Fragment</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#为什么-Fragment-？"><span class="toc-number">1.1.</span> <span class="toc-text">为什么 Fragment ？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#添加-Fragment"><span class="toc-number">1.2.</span> <span class="toc-text">添加 Fragment</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Fragment-生命周期"><span class="toc-number">1.3.</span> <span class="toc-text">Fragment 生命周期</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#通信方式："><span class="toc-number">1.4.</span> <span class="toc-text">通信方式：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#其他知识点"><span class="toc-number">1.5.</span> <span class="toc-text">其他知识点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#回退栈管理"><span class="toc-number">1.5.0.1.</span> <span class="toc-text">回退栈管理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fragment-与-ActionBar-和-MenuItem"><span class="toc-number">1.5.0.2.</span> <span class="toc-text">Fragment 与 ActionBar 和 MenuItem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#没有布局的-Fragment-——-保存大数据"><span class="toc-number">1.5.0.3.</span> <span class="toc-text">没有布局的 Fragment —— 保存大数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DialogFragment-的使用"><span class="toc-number">1.5.0.4.</span> <span class="toc-text">DialogFragment 的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fragment-的startActivityForResult"><span class="toc-number">1.5.0.5.</span> <span class="toc-text">Fragment 的startActivityForResult</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fragment-add-amp-replace"><span class="toc-number">1.5.0.6.</span> <span class="toc-text">Fragment add &amp; replace</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">1.6.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/19/Android之Fragment/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/19/Android之Fragment/&text=Android之Fragment"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/19/Android之Fragment/&is_video=false&description=Android之Fragment"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android之Fragment&body=Check out this article: http://yoursite.com/2019/03/19/Android之Fragment/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/19/Android之Fragment/&title=Android之Fragment"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/19/Android之Fragment/&name=Android之Fragment&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 黄耿
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script type="text/javascript">
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+      return GUEST_INFO.indexOf(item) > -1
+    });
+    guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "QkzLlK1k0KOnWTQtGcA7pnfP-gzGzoHsz",
+        appKey: "3x2y811wfs2AtVQEz7kKeMhL",
+        avatar:"mm",
+        placeholder: "say somethings ?",
+        guest_info:guest_info,
+        pageSize:"10"
+    })
+</script>
+ 
+</body>
+</html>
