@@ -14,10 +14,12 @@
 <meta property="og:site_name" content="Okkenok">
 <meta property="og:description" content="Activity 之 ServicestartService()和bindService()的区别startService()1&amp;lt;service android:name=&quot;.MyService&quot;/&amp;gt; 12345678910111213141516171819202122public class MyService extends Service&amp;#123;  @Nullable  @">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-03-19T11:53:15.889Z">
+<meta property="og:image" content="http://static.oschina.net/uploads/space/2015/0208/215302_BuU9_661133.jpg">
+<meta property="og:updated_time" content="2019-03-19T14:27:19.401Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android之Service">
 <meta name="twitter:description" content="Activity 之 ServicestartService()和bindService()的区别startService()1&amp;lt;service android:name=&quot;.MyService&quot;/&amp;gt; 12345678910111213141516171819202122public class MyService extends Service&amp;#123;  @Nullable  @">
+<meta name="twitter:image" content="http://static.oschina.net/uploads/space/2015/0208/215302_BuU9_661133.jpg">
     
     
         
@@ -103,7 +105,7 @@
 
     </div>
     <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Activity-之-Service"><span class="toc-number">1.</span> <span class="toc-text">Activity 之 Service</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#startService-和bindService-的区别"><span class="toc-number">1.1.</span> <span class="toc-text">startService()和bindService()的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#startService"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">startService()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bindService"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">bindService()</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Activity-之-Service"><span class="toc-number">1.</span> <span class="toc-text">Activity 之 Service</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#startService-和bindService-的区别"><span class="toc-number">1.1.</span> <span class="toc-text">startService()和bindService()的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#startService"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">startService()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bindService"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">bindService()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">1.2.</span> <span class="toc-text">参考引用</span></a></li></ol>
     </div>
   </span>
 </div>
@@ -157,8 +159,13 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unbindService(conn);</span><br></pre></td></tr></table></figure>
 <p><code>bindService()</code>开启服务时，根据生命周期<code>onBind()</code>返回值是否为空，有两种情况：</p>
 <ol>
-<li>为空：</li>
+<li>为空：通过<code>bindService()</code>开启服务，生命周期：<code>onCreate()</code>-&gt;<code>onBind()</code>;调用多次，<code>onCreate()</code>和<code>onBind()</code>也只会在第一次被执行。调用<code>unbindService()</code>结束服务，生命周期：<code>onUnbind()</code>-&gt;<code>onDestroy()</code>，并且<code>unbindService</code>只能调用一次，多次调用会抛出异常。调用<code>unbindService()</code>一定要确保服务已经开启，否则应用会抛异常。</li>
+<li>不为空：调用<code>bindService()</code>，生命周期：<code>onCreate()</code>-&gt;<code>onBind()</code>-&gt;<code>onServiceConnected()</code>;<code>onBind()</code>返回的对象会传递到<code>onServiceConnected()</code>，我们可以利用这个 IBinder 对象进行交互通信。与上一样，<code>unbindService()</code>和<code>onDestroy</code>只会执行一次。同一服务可以用两种方式一同开启，没有先后顺序要求，<code>onCreate()</code>只会执行一。关闭服务需要<code>stopService()</code>和<code>unbindService()</code>都被调用，也没有先后顺序之分，<code>onDestroy()</code>也只会执行一次。<strong>如果先调用<code>unbindService()</code>，此时服务不会自动终止，再调用<code>stopService()</code>之后，服务才会终止；如果先调用<code>stopService()</code>，此时服务也不会终止，而再调用<code>unbindService()`</code>或者之前调用<code>bindService()</code>的 Context 不存在了（如 Activity被 finish 的时候）之后，服务才会自动停止。</strong>  </li>
 </ol>
+<p>其他： Service 的运行线程（生命周期方法全部在主线程）、ServiceConnection 回调方法也运行于主线程。</p>
+<p><img src="http://static.oschina.net/uploads/space/2015/0208/215302_BuU9_661133.jpg" alt="生命周期"></p>
+<hr>
+<h2 id="参考引用"><a href="#参考引用" class="headerlink" title="参考引用"></a>参考引用</h2><p><a href="https://www.jianshu.com/p/d870f99b675c" target="_blank" rel="noopener">Android中startService和bindService的区别</a><br><a href="https://my.oschina.net/tingzi/blog/376545" target="_blank" rel="noopener">startService与bindService的区别</a></p>
 
   </div>
 </article>
@@ -188,7 +195,7 @@
     </div>
 
     <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Activity-之-Service"><span class="toc-number">1.</span> <span class="toc-text">Activity 之 Service</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#startService-和bindService-的区别"><span class="toc-number">1.1.</span> <span class="toc-text">startService()和bindService()的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#startService"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">startService()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bindService"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">bindService()</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Activity-之-Service"><span class="toc-number">1.</span> <span class="toc-text">Activity 之 Service</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#startService-和bindService-的区别"><span class="toc-number">1.1.</span> <span class="toc-text">startService()和bindService()的区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#startService"><span class="toc-number">1.1.0.1.</span> <span class="toc-text">startService()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#bindService"><span class="toc-number">1.1.0.2.</span> <span class="toc-text">bindService()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">1.2.</span> <span class="toc-text">参考引用</span></a></li></ol>
     </div>
 
     <div id="share-footer" style="display: none">
