@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Window、Activity、DecorView 以及 ViewRoot一、职能简介ActivityActivity 并不负责视图控制，它只是控制生命周期和处理事件。真正控制视图的是 Window。一个 Activity 包含了一个 Window，Window 才是代表一个窗口。Activity 就像一个控制其，统筹视图的添加和显示，以及通过其他回调方法，来与 Window、以及 View 进行">
+<meta name="keywords" content="Android 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Window、Activity、DecorView以及ViewRoot的关系">
+<meta property="og:url" content="http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/index.html">
+<meta property="og:site_name" content="Okkenok">
+<meta property="og:description" content="Window、Activity、DecorView 以及 ViewRoot一、职能简介ActivityActivity 并不负责视图控制，它只是控制生命周期和处理事件。真正控制视图的是 Window。一个 Activity 包含了一个 Window，Window 才是代表一个窗口。Activity 就像一个控制其，统筹视图的添加和显示，以及通过其他回调方法，来与 Window、以及 View 进行">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3985563-e773ab2cb83ad214.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/690/format/webp">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/3985563-582aae4fe27d0b3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/679/format/webp">
+<meta property="og:updated_time" content="2019-03-26T14:32:14.455Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Window、Activity、DecorView以及ViewRoot的关系">
+<meta name="twitter:description" content="Window、Activity、DecorView 以及 ViewRoot一、职能简介ActivityActivity 并不负责视图控制，它只是控制生命周期和处理事件。真正控制视图的是 Window。一个 Activity 包含了一个 Window，Window 才是代表一个窗口。Activity 就像一个控制其，统筹视图的添加和显示，以及通过其他回调方法，来与 Window、以及 View 进行">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/3985563-e773ab2cb83ad214.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/690/format/webp">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Window、Activity、DecorView以及ViewRoot的关系</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/03/26/AIDI-和-Binder/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/03/24/Android-之-View-绘制流程/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&text=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&is_video=false&description=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Window、Activity、DecorView以及ViewRoot的关系&body=Check out this article: http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&name=Window、Activity、DecorView以及ViewRoot的关系&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Window、Activity、DecorView-以及-ViewRoot"><span class="toc-number">1.</span> <span class="toc-text">Window、Activity、DecorView 以及 ViewRoot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、职能简介"><span class="toc-number">2.</span> <span class="toc-text">一、职能简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Activity"><span class="toc-number">2.1.</span> <span class="toc-text">Activity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Window"><span class="toc-number">2.2.</span> <span class="toc-text">Window</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DecorView"><span class="toc-number">2.3.</span> <span class="toc-text">DecorView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ViewRoot"><span class="toc-number">2.4.</span> <span class="toc-text">ViewRoot</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、DecorView-的创建"><span class="toc-number">3.</span> <span class="toc-text">二、DecorView 的创建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setContentView"><span class="toc-number">3.1.</span> <span class="toc-text">setContentView()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attach"><span class="toc-number">3.2.</span> <span class="toc-text">attach()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#installDecor"><span class="toc-number">3.3.</span> <span class="toc-text">installDecor()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#generateLayout"><span class="toc-number">3.4.</span> <span class="toc-text">generateLayout()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、DecorView-的显示"><span class="toc-number">4.</span> <span class="toc-text">三、DecorView 的显示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#handleLaunchActivity"><span class="toc-number">4.1.</span> <span class="toc-text">handleLaunchActivity()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#handleResumeActivity"><span class="toc-number">4.2.</span> <span class="toc-text">handleResumeActivity()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#makeVisible"><span class="toc-number">4.3.</span> <span class="toc-text">makeVisible()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#addView"><span class="toc-number">4.4.</span> <span class="toc-text">addView()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、总结"><span class="toc-number">5.</span> <span class="toc-text">四、总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">6.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Window、Activity、DecorView以及ViewRoot的关系
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Okkenok</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-26T14:28:31.000Z" itemprop="datePublished">2019-03-26</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android-面试/">Android 面试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Window、Activity、DecorView-以及-ViewRoot"><a href="#Window、Activity、DecorView-以及-ViewRoot" class="headerlink" title="Window、Activity、DecorView 以及 ViewRoot"></a>Window、Activity、DecorView 以及 ViewRoot</h2><h2 id="一、职能简介"><a href="#一、职能简介" class="headerlink" title="一、职能简介"></a>一、职能简介</h2><h3 id="Activity"><a href="#Activity" class="headerlink" title="Activity"></a>Activity</h3><p>Activity 并不负责视图控制，它只是控制生命周期和处理事件。真正控制视图的是 Window。一个 Activity 包含了一个 Window，Window 才是代表一个窗口。<strong>Activity 就像一个控制其，统筹视图的添加和显示，以及通过其他回调方法，来与 Window、以及 View 进行交互</strong>。</p>
+<h3 id="Window"><a href="#Window" class="headerlink" title="Window"></a>Window</h3><p>Window 是视图的承载器，内部持有一个 DecorView，而这个 DecorView 才是 View 的根布局。Window 是一个抽象类，实际在 Activity 中持有的是其子类 PhoneWindow。  </p>
+<p>PhoneWindow 中有个内部类 DecorView，通过创建 DecorView 来加载 Activity 中设置的布局<code>R.layout.activity_main</code>。Window 通过 WindowManager 将 DecorView 加载其中，并将 DecorView 交给 ViewRoot，进行视图绘制以及其他交互。</p>
+<h3 id="DecorView"><a href="#DecorView" class="headerlink" title="DecorView"></a>DecorView</h3><p><strong>DecorView 是 FrameLayout 的子类，它可以被认为是 Android 视图树的根节点视图</strong>。DecorView 作为顶级 View，一般情况下它内部包含一个竖直方向的 LinearLayout，<strong>在这个 LinearLayout 里面有上中下三个部分，上面是个 ViewStub，延迟加载的视图（应该是设置 ActionBar，根据 Theme 设置），中间是标题栏（根据 Theme 设置，有的布局没有），下面的是内容栏。</strong>具体情况和 Android 版本及主体有关。</p>
+<p>在 Activity 中 通过<code>setContentView()</code>所设置的布局文件其实就是被加载到内容栏之中。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Popout bar for action modes --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ViewStub</span> <span class="attr">...</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">...</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">FrameLayout</span> <span class="attr">android:id</span>=<span class="string">"@android:id/content"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">...</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ViewGroup content = (ViewGroup)findViewById(android.R.id.content);</span><br><span class="line">ViewGroup rootView = (ViewGroup)content.getChildAt(<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="ViewRoot"><a href="#ViewRoot" class="headerlink" title="ViewRoot"></a>ViewRoot</h3><p>ViewRoot 对应 <strong>ViewRootImpl 类，它是连接 WindowManagerService 和 DecorView 的纽带</strong>，View 的三大流程（测量<code>measure</code>、布局<code>layout</code>、绘制<code>draw</code>）均通过 ViewRoot 来完成。</p>
+<p>ViewRoot 并不属于 View 树的一份子。从源码实现上来看，它既非 View 的子类，也非 View 的父类，但是，它实现了 ViewParent 接口，这让它可以作为 View 的<strong>名义上的父视图</strong>。</p>
+<p>ViewRoot 继承了 Handler 类，可以接收事件并分发，Android 所有的触屏事件、按键事件、界面刷新等事件都是通过 ViewRoot 进行分发的。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3985563-e773ab2cb83ad214.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/690/format/webp" alt="结构关系"></p>
+<h2 id="二、DecorView-的创建"><a href="#二、DecorView-的创建" class="headerlink" title="二、DecorView 的创建"></a>二、DecorView 的创建</h2><p>DecorView 是怎么一层层嵌套在 Activity，PhoneWindow 中的，以及 DevorView 如何加载内部布局？</p>
+<h3 id="setContentView"><a href="#setContentView" class="headerlink" title="setContentView()"></a><code>setContentView()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(@LayoutRes <span class="keyword">int</span> layoutResID)</span></span>&#123;</span><br><span class="line">    getWindow().setContentView(layoutResID);</span><br><span class="line">    initWindowDecorActionBar();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>setContentView()</code>实际是交给 Window 装载视图，Activity 是怎么获得 Window 对象的？</p>
+<h3 id="attach"><a href="#attach" class="headerlink" title="attach()"></a><code>attach()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">attach</span><span class="params">(Context context, ActivityThread aThread, Instrumentation instr, IBinder token, <span class="keyword">int</span> ident, Application application, Intent intent, ActivityInfo info, CharSequence title, Activity parent, String id, NonConfigurationInstances lastNonConfigurationInstances, Configuration config, String referrer, IVoiceInteractor voiceInteractor, Window window)</span></span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    mWindow = <span class="keyword">new</span> PhoneWindow(<span class="keyword">this</span>, window); <span class="comment">//创建一个 Window 对象</span></span><br><span class="line">    mWindow.setWindowControllerCallback(<span class="keyword">this</span>);</span><br><span class="line">    mWindow.setCallback(<span class="keyword">this</span>); <span class="comment">// 设置回调，向 Activity 分发点击或状态改变等事件</span></span><br><span class="line">    mWindow.setOnWindowDismissedCallback(<span class="keyword">this</span>);</span><br><span class="line">   ... 		       			       mWindow.setWindowManager((WindowManager)context.getSystemService(Context.WINDOW_SERVICE), mToken, mComponent.flattenToString(), (info.flags &amp; ActivityInfo.FLAG_HARDWARE_ACCELERATED) != <span class="number">0</span>); <span class="comment">//给 Window 设置 WindowManager 对象</span></span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在 Activity 中的<code>attach()</code>中，生成了 PhoneWindow 实例。既然有了 Window 对象，那么就可以设置 DecorView 给 Window 对象了。</p>
+<p><code>attach()</code>-&gt;<code>getWindow().setContentView()</code>-&gt;<code>PhoneWindow:setContentView()</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(<span class="keyword">int</span> layoutResID)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(mContentParent == <span class="keyword">null</span>)&#123; <span class="comment">//mContentParent 为空，创建一个 DecorView</span></span><br><span class="line">        installDecor();</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        mContentParent.removeAllViews(); <span class="comment">//删除其中的 View</span></span><br><span class="line">    &#125;</span><br><span class="line">    mLayoutInflater.inflate(layoutResID, mContentParent); <span class="comment">// 为 mContentParent 添加子 View, 即 Activity 中设置的布局文件</span></span><br><span class="line">    <span class="keyword">final</span> Callback cb = getCallback();</span><br><span class="line">    <span class="keyword">if</span>(cb != <span class="keyword">null</span> &amp;&amp; !isDestroyed())&#123;</span><br><span class="line">        cb.onContentChanged(); <span class="comment">//回调通知，内容改变</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>mContentParent 就是前面布局中<code>@android:id/content</code>所对应的 FrameLayout。</strong></p>
+<p><strong>先在 PhoneWindow 中创建一个 DecorView，其中创建的过程中可能根据 Theme 不同，加载不同的布局格式，例如有没有 Title，或有没有 ActionBar 等，然后再向 mContentParent 中加入子 View，即 Activity 中设置的布局。</strong>到此，视图一层层嵌套添加上了。</p>
+<p>那么怎么创建 DecorView 呢？</p>
+<h3 id="installDecor"><a href="#installDecor" class="headerlink" title="installDecor()"></a><code>installDecor()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">installDecor</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(mDecor == <span class="keyword">null</span>)&#123;</span><br><span class="line">        mDecor = genereateDecor(); <span class="comment">//生成 DecorView</span></span><br><span class="line">        mDevor.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);</span><br><span class="line">        mDecor.setIsRootNamespace(<span class="keyword">true</span>);</span><br><span class="line">        <span class="keyword">if</span>(!mInvalidatePanelMenuPosted &amp;&amp; mInvalidatePanelMenuFeatures != <span class="number">0</span>)&#123;</span><br><span class="line">   mDecor.postOnAnimation(mInvalidatePanelMenuRunnable);         </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(mContentParent == <span class="keyword">null</span>)&#123;</span><br><span class="line">        mContentParent = generateLayout(mDecor); <span class="comment">//为 DecorView 设置布局格式，并返回 mContentParent</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> DecorView <span class="title">generateDecor</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> DecorView(getContext(), -<span class="number">1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="generateLayout"><a href="#generateLayout" class="headerlink" title="generateLayout()"></a><code>generateLayout()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> ViewGroup <span class="title">generateLayout</span><span class="params">(DecorView decor)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 从主题文件中获取样式信息</span></span><br><span class="line">    TypedArray a = getWindowStyle();</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span>(a.getBoolean(R.styleable.Window_windowNotitle, <span class="keyword">false</span>))&#123;</span><br><span class="line">        requestFeature(FEATURE_NO_TITLE);</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(a.getBoolean(R.styleable.Window_windowActionBar, <span class="keyword">false</span>))&#123;</span><br><span class="line">        requestFeature(FEATURE_ACTION_BAR);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">//根据主题样式，加载窗口布局</span></span><br><span class="line">    <span class="keyword">int</span> layoutResource;</span><br><span class="line">    <span class="keyword">int</span> features = getLocalFeatures();</span><br><span class="line">    <span class="keyword">if</span>((features &amp; (<span class="number">1</span> &lt;&lt; FEATURE_SWIPE_TO_DISMISS)) != <span class="number">0</span>)&#123;</span><br><span class="line">        layoutResource = R.layout.screen_swipe_dismiss;</span><br><span class="line">    &#125;<span class="keyword">else</span> <span class="keyword">if</span>(...)&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    View in = mLayoutInflater.inflate(layoutResource, <span class="keyword">null</span>); <span class="comment">//加载 layoutResource</span></span><br><span class="line">    <span class="comment">//往 DecorView 添加子 View，即文章开头介绍 DecorView 时提到的布局格式，那只是一个例子，根据主题样式不同，加载不同的布局</span></span><br><span class="line">    decor.addView(in, <span class="keyword">new</span> ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT));</span><br><span class="line">    mContentRoot = (ViewGroup) in;</span><br><span class="line">    </span><br><span class="line">    ViewGroup contentParent = (ViewGroup)findViewById(ID_ANDROID_CONTENT); <span class="comment">//这里获取的就是 mContentParent</span></span><br><span class="line">    <span class="keyword">if</span>(contentParent == <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Window couldn't find content container view"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>((features &amp; (<span class="number">1</span> &lt;&lt; FEATURE_INDETERMINATE_PROGRESS)) != <span class="number">0</span>)&#123;</span><br><span class="line">        ProgressBar progress = getCircularProgressBar(<span class="keyword">false</span>);</span><br><span class="line">        <span class="keyword">if</span>(progress != <span class="keyword">null</span>)&#123;</span><br><span class="line">            progress.setIndeterminate(<span class="keyword">true</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>((features &amp; (<span class="number">1</span> &lt;&lt; FEATURE_SWIPE_TO_DISMISS)) != <span class="number">0</span>)&#123;</span><br><span class="line">        registerSwipeCallback();</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> contentParent;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>先从主题中获取样式，然后根据样式，加载对应布局到 DecorView 中，然后从中获取 mContentParent。获得到之后，就可以后续的为 mContentParent 添加 View，即 Activity 中的布局</strong>。</p>
+<h2 id="三、DecorView-的显示"><a href="#三、DecorView-的显示" class="headerlink" title="三、DecorView 的显示"></a>三、DecorView 的显示</h2><p>通过<code>setContentView()</code>设置的界面，为什么在<code>onResume()</code>之后才对用户可见呢？</p>
+<h3 id="handleLaunchActivity"><a href="#handleLaunchActivity" class="headerlink" title="handleLaunchActivity()"></a><code>handleLaunchActivity()</code></h3><p>从 ActivityThread 中的 <code>handleLaunchActivity()</code>说起</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">handleLaunchActivity</span><span class="params">(ActivityClientRecord r, Intent customIntent)</span></span>&#123;</span><br><span class="line">    <span class="comment">//就是在这里调用了 Activity.attach 呀，接着调用了 Activity.onCreate() 和 Activity.onStart()</span></span><br><span class="line">    <span class="comment">//但是由于只是初始化了 mDecor，添加了布局文件，</span></span><br><span class="line">    <span class="comment">//还没有把 mDecor 添加到负责 UI 显示的 PhoneWindow 中</span></span><br><span class="line">    <span class="comment">//所以这时对用户来说还是不可见的</span></span><br><span class="line">    Activity a = performLaunchActivity(r, customIntent);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(a != <span class="keyword">null</span>)&#123;</span><br><span class="line">        handleResumeActivity(r.token, <span class="keyword">false</span>, r.isForward, !r.activity.mFinished &amp;&amp; !r.startsNotResumed);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(!r.activity.mFinished &amp;&amp; r.startsNotResumed)&#123;</span><br><span class="line">            <span class="keyword">try</span>&#123;</span><br><span class="line">                r.activity.mCalled = <span class="keyword">false</span>;</span><br><span class="line">                mInsrtumentation.callActivityOnPause(r.activity);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>接着，在<code>handleResumeActivity()</code>中，DecorView 将会显示出来，ViewRoot 也将登场。</p>
+<h3 id="handleResumeActivity"><a href="#handleResumeActivity" class="headerlink" title="handleResumeActivity()"></a><code>handleResumeActivity()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">handleResumeActivity</span><span class="params">(IBinder token, <span class="keyword">boolean</span> clearHide, <span class="keyword">boolean</span> isForward, <span class="keyword">boolean</span> reallyResume)</span></span>&#123;</span><br><span class="line">    <span class="comment">//这个时候，Activity.onResume() 已经调用了，但是现在界面还是不可见的</span></span><br><span class="line">    ActivityClientRecord r = performResumeActivity(token, clearHide);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>(r != <span class="keyword">null</span>)&#123;</span><br><span class="line">        <span class="keyword">final</span> Activity a = r.activity;</span><br><span class="line">        <span class="keyword">if</span>(r.window == <span class="keyword">null</span> &amp;&amp; !a.mFinished &amp;&amp; willBeVisible)&#123;</span><br><span class="line">            r.window = r.activity.getWindow();</span><br><span class="line">            View decor = r.window.getDecorView();</span><br><span class="line">            <span class="comment">// decor 对用户不可见</span></span><br><span class="line">            decor.setVisibility(View.INVISIBLE);</span><br><span class="line">            ViewManager vm = a.getWindowManager();</span><br><span class="line">            WindowManager.LayoutParams l = r.window.getAttributes();</span><br><span class="line">            a.mDecor = decor;</span><br><span class="line">            </span><br><span class="line">            l.type = WindowManager.LayoutParams.TYPE_BASE_APPLICATION;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(a.mVisibleFromClient)&#123;</span><br><span class="line">                a.mWindowAdded = <span class="keyword">true</span>;</span><br><span class="line">                wm.addView(decor, l); <span class="comment">//但是这个时候，还是不可见的</span></span><br><span class="line">            &#125;</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span>(!r.activity.mFinished &amp;&amp; willBeVisible &amp;&amp; r.activity.mDecor != <span class="keyword">null</span> &amp;&amp; !r.hideForNow)&#123;</span><br><span class="line">                <span class="keyword">if</span>(r.activity.mVisibleFromClient)&#123;</span><br><span class="line">                    <span class="comment">//在这里执行了重要的操作，使得 DecorView 可见</span></span><br><span class="line">                    r.activity.maleVisible();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="makeVisible"><a href="#makeVisible" class="headerlink" title="makeVisible()"></a><code>makeVisible()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">makeVisible</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(!mWindowAdded)&#123;</span><br><span class="line">        ViewManager vm = getWindowManager();</span><br><span class="line">        vm.addView(mDecor, getWindow().getAttributes()); <span class="comment">// 将 DecorView 添加到 WindowManager</span></span><br><span class="line">        mWindowAdded = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    mDecor.setVisibility(View.VISIBLE); <span class="comment">// DecorView 可见！</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>vm.addView(mDecor, getWindow().getAttributes());</code>在其内部创建了一个 ViewRootImpl 对象，负责绘制显示各个子 View.</p>
+<p><code>addView()</code>方法，因为 WindowManager 是个接口，具体是交给 WindowManagerImpl 来实现的</p>
+<h3 id="addView"><a href="#addView" class="headerlink" title="addView()"></a><code>addView()</code></h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">WindowManagerImpl</span> <span class="keyword">implements</span> <span class="title">WindowManager</span></span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> WindowManagerGlobal mGlobal = WindowManagerGlobal.getInstance();</span><br><span class="line">    ...</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addView</span><span class="params">(View view, ViewGroup.LayoutParams params)</span></span>&#123;</span><br><span class="line">        mGlobal.addView(view, params, mDisplay, mParentWindow);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>再交给 WindowManagerGlobal 的<code>addView()</code>方法实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addView</span><span class="params">(View view, ViewGroup.LayoutPramas params, Display display, Window parentWindow)</span></span>&#123;</span><br><span class="line">	<span class="keyword">final</span> WindowManager.LayoutParams wparams = (WindowManager.LayoutParams)params;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">synchronized</span>(mLock)&#123;</span><br><span class="line">        ViewRootImpl root;</span><br><span class="line">        root = <span class="keyword">new</span> ViewRootImpl(view.getContext(), display);</span><br><span class="line">        view.setLayoutParams(wparams);</span><br><span class="line">        </span><br><span class="line">        mViews.add(view);</span><br><span class="line">        mRoots.add(root);</span><br><span class="line">        mParams.add(wparams);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">        <span class="comment">// 将 DecorView 交给 ViewRootImpl</span></span><br><span class="line">        root.setView(view, wparams, panelParentView);</span><br><span class="line">    &#125;<span class="keyword">catch</span>(RuntimeException e)&#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中 ViewRootImpl 实例在<code>setView()</code>中通过一系列的操作，最终调用了<code>performTraversals()</code>方法，开始绘制视图树，最终界面才会显示出来。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/3985563-582aae4fe27d0b3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/679/format/webp" alt="绘制流程"></p>
+<p>ViewRootImpl 的作用不止如此，还有许多功能，如事件分发。要知道，当用户点击屏幕产生一个触摸行为，这个触摸行为通过底层硬见来传递捕获，然后就交给了 ViewRootImpl，接着将事件传递给 DecorView，而 DecorView 再交给 PhoneWindow，PhoneWindow 再交给 Activity，然后接下来就是我们常见的 <a href="https://okkenok.github.io/2019/03/22/Android-%E4%B9%8B%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6/" target="_blank" rel="noopener">View 事件分发</a>了</p>
+<p><strong>硬见 -&gt; ViewRootImpl -&gt; DecorView -&gt; PhoneWindow -&gt; Activity</strong></p>
+<h2 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h2><p><strong>Activity 就像个控制器，不负责视图部分。Window 像个承载器，装着内部视图。DecorView 就是个顶层视图，是所有 View 的最外层布局。ViewRoot 像个连接器，负责沟通，通过硬件的感知来通知视图，进行用户之间的交互。</strong></p>
+<hr>
+<h2 id="参考引用"><a href="#参考引用" class="headerlink" title="参考引用"></a>参考引用</h2><p><a href="https://www.jianshu.com/p/8766babc40e0" target="_blank" rel="noopener">简析Window、Activity、DecorView以及ViewRoot之间的错综关系</a></p>
+
+  </div>
+</article>
+
+	<div class="blog-post-comments">
+        
+        
+        <div class="vcomment"></div>
+        
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Window、Activity、DecorView-以及-ViewRoot"><span class="toc-number">1.</span> <span class="toc-text">Window、Activity、DecorView 以及 ViewRoot</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、职能简介"><span class="toc-number">2.</span> <span class="toc-text">一、职能简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Activity"><span class="toc-number">2.1.</span> <span class="toc-text">Activity</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Window"><span class="toc-number">2.2.</span> <span class="toc-text">Window</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DecorView"><span class="toc-number">2.3.</span> <span class="toc-text">DecorView</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ViewRoot"><span class="toc-number">2.4.</span> <span class="toc-text">ViewRoot</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、DecorView-的创建"><span class="toc-number">3.</span> <span class="toc-text">二、DecorView 的创建</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#setContentView"><span class="toc-number">3.1.</span> <span class="toc-text">setContentView()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#attach"><span class="toc-number">3.2.</span> <span class="toc-text">attach()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#installDecor"><span class="toc-number">3.3.</span> <span class="toc-text">installDecor()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#generateLayout"><span class="toc-number">3.4.</span> <span class="toc-text">generateLayout()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、DecorView-的显示"><span class="toc-number">4.</span> <span class="toc-text">三、DecorView 的显示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#handleLaunchActivity"><span class="toc-number">4.1.</span> <span class="toc-text">handleLaunchActivity()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#handleResumeActivity"><span class="toc-number">4.2.</span> <span class="toc-text">handleResumeActivity()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#makeVisible"><span class="toc-number">4.3.</span> <span class="toc-text">makeVisible()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#addView"><span class="toc-number">4.4.</span> <span class="toc-text">addView()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、总结"><span class="toc-number">5.</span> <span class="toc-text">四、总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">6.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&text=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&is_video=false&description=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Window、Activity、DecorView以及ViewRoot的关系&body=Check out this article: http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&title=Window、Activity、DecorView以及ViewRoot的关系"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/26/Window、Activity、DecorView以及ViewRoot的关系/&name=Window、Activity、DecorView以及ViewRoot的关系&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 黄耿
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script type="text/javascript">
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+      return GUEST_INFO.indexOf(item) > -1
+    });
+    guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "QkzLlK1k0KOnWTQtGcA7pnfP-gzGzoHsz",
+        appKey: "3x2y811wfs2AtVQEz7kKeMhL",
+        avatar:"mm",
+        placeholder: "say somethings ?",
+        guest_info:guest_info,
+        pageSize:"10"
+    })
+</script>
+ 
+</body>
+</html>
