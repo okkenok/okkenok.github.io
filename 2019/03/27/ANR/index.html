@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="什么是 ANRApplication Not Responding，意思就是程序未响应。如果一个应用无法响应用户的交互，系统就会弹出一个 ANR 对话框。 出现场景 InputDispatching Timeout：在 5 秒内没有响应屏幕触摸事件或键盘输入事件 BroadcastQueue Timeout：在执行前台广播（BroadcastReceiver）的onReceive()函数时 10">
+<meta name="keywords" content="Android 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ANR">
+<meta property="og:url" content="http://yoursite.com/2019/03/27/ANR/index.html">
+<meta property="og:site_name" content="Okkenok">
+<meta property="og:description" content="什么是 ANRApplication Not Responding，意思就是程序未响应。如果一个应用无法响应用户的交互，系统就会弹出一个 ANR 对话框。 出现场景 InputDispatching Timeout：在 5 秒内没有响应屏幕触摸事件或键盘输入事件 BroadcastQueue Timeout：在执行前台广播（BroadcastReceiver）的onReceive()函数时 10">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-03-27T14:50:34.651Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ANR">
+<meta name="twitter:description" content="什么是 ANRApplication Not Responding，意思就是程序未响应。如果一个应用无法响应用户的交互，系统就会弹出一个 ANR 对话框。 出现场景 InputDispatching Timeout：在 5 秒内没有响应屏幕触摸事件或键盘输入事件 BroadcastQueue Timeout：在执行前台广播（BroadcastReceiver）的onReceive()函数时 10">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>ANR</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/03/27/Android-之内存相关/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/03/26/AIDI-和-Binder/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/27/ANR/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/27/ANR/&text=ANR"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/27/ANR/&is_video=false&description=ANR"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ANR&body=Check out this article: http://yoursite.com/2019/03/27/ANR/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/27/ANR/&name=ANR&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是-ANR"><span class="toc-number">1.</span> <span class="toc-text">什么是 ANR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#出现场景"><span class="toc-number">2.</span> <span class="toc-text">出现场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何避免"><span class="toc-number">3.</span> <span class="toc-text">如何避免</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何定位"><span class="toc-number">4.</span> <span class="toc-text">如何定位</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#原理流程总结"><span class="toc-number">5.</span> <span class="toc-text">原理流程总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Service-Timeout"><span class="toc-number">5.1.</span> <span class="toc-text">Service Timeout</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考引用"><span class="toc-number">6.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        ANR
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Okkenok</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-27T14:49:37.000Z" itemprop="datePublished">2019-03-27</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android-面试/">Android 面试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="什么是-ANR"><a href="#什么是-ANR" class="headerlink" title="什么是 ANR"></a>什么是 ANR</h1><p>Application Not Responding，意思就是程序未响应。如果一个应用无法响应用户的交互，系统就会弹出一个 ANR 对话框。</p>
+<h1 id="出现场景"><a href="#出现场景" class="headerlink" title="出现场景"></a>出现场景</h1><ul>
+<li>InputDispatching Timeout：在 5 秒内没有响应屏幕触摸事件或键盘输入事件</li>
+<li>BroadcastQueue Timeout：在执行前台广播（BroadcastReceiver）的<code>onReceive()</code>函数时 10 秒没有处理完成，后台为 60 秒</li>
+<li>Service Timeout：前台服务 20 秒内，后台服务在 200 秒内没有执行完毕</li>
+<li>ContentProvider Timeout：ContentProvider 的 publish 在 10 秒内没有进行完</li>
+</ul>
+<p>主线程被 I/O 操作（从 4.0 之后网络 I/O 不允许在主线程中）阻塞、或是主线程中存在耗时或是错误的计算（比如 Thread.wait() 或者 Thread.sleep() 等）</p>
+<p>Android 系统中，<strong>ActivityManagerService（AMS）</strong>和 <strong>WindowManagerService（WMS）</strong>会检测 App 的响应时间，如果 App 在特定时间无法响应屏幕触摸或键盘输入事件，或者特定事件没有处理完毕，就会出现 ANR</p>
+<h1 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h1><p>将 I/O 操作在工作线程来处理，减少其他耗时操作和错误操作。</p>
+<ul>
+<li>使用 AsyncTask 处理耗时 IO 操作</li>
+<li>使用 Thread 或者 HandlerThread 时，调用<code>Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND)</code>设置优先级，否则仍会降低程序响应，因为默认 Thread 的优先级和主线程相同。</li>
+<li>使用 Handler 处理工作线程结果，而不是使用<code>Thread.wait()</code>或者<code>Thread.sleep()</code>来阻塞主线程。</li>
+<li>Activity 的<code>onCreate()</code>和<code>onResume()</code>中尽量避免耗时的代码</li>
+<li>BroadcastReceiver 中<code>onReceive()</code>中也要尽量减少耗时代码，建议使用 IntentService 处理</li>
+</ul>
+<h1 id="如何定位"><a href="#如何定位" class="headerlink" title="如何定位"></a>如何定位</h1><p>通过查看<code>/data/anr/traces.txt</code>，最新的 ANR 信息在最开始部分。</p>
+<h1 id="原理流程总结"><a href="#原理流程总结" class="headerlink" title="原理流程总结"></a>原理流程总结</h1><h2 id="Service-Timeout"><a href="#Service-Timeout" class="headerlink" title="Service Timeout"></a>Service Timeout</h2><ol>
+<li>Service 在创建之前会延迟发送一个消息，而这个消息就是 ANR 的起源</li>
+<li>Service 创建完毕，在规定的时间之内执行完毕<code>onCreate()</code>方法就移除这个消息，就不会产生 ANR 了；</li>
+<li>在规定时间之内没有完成<code>onCreate()</code>的调用，消息被执行，ANR 发生。</li>
+</ol>
+<hr>
+<h1 id="参考引用"><a href="#参考引用" class="headerlink" title="参考引用"></a>参考引用</h1><p><a href="https://droidyue.com/blog/2015/07/18/anr-in-android/" target="_blank" rel="noopener">说说Android中的ANR</a></p>
+<p><a href="https://juejin.im/post/58e5bd6dda2f60005fea525c" target="_blank" rel="noopener">Android性能优化（七）之你真的理解ANR吗？</a></p>
+
+  </div>
+</article>
+
+	<div class="blog-post-comments">
+        
+        
+        <div class="vcomment"></div>
+        
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#什么是-ANR"><span class="toc-number">1.</span> <span class="toc-text">什么是 ANR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#出现场景"><span class="toc-number">2.</span> <span class="toc-text">出现场景</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何避免"><span class="toc-number">3.</span> <span class="toc-text">如何避免</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#如何定位"><span class="toc-number">4.</span> <span class="toc-text">如何定位</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#原理流程总结"><span class="toc-number">5.</span> <span class="toc-text">原理流程总结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Service-Timeout"><span class="toc-number">5.1.</span> <span class="toc-text">Service Timeout</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考引用"><span class="toc-number">6.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/27/ANR/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/27/ANR/&text=ANR"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/27/ANR/&is_video=false&description=ANR"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ANR&body=Check out this article: http://yoursite.com/2019/03/27/ANR/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/27/ANR/&title=ANR"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/27/ANR/&name=ANR&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 黄耿
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script type="text/javascript">
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+      return GUEST_INFO.indexOf(item) > -1
+    });
+    guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "QkzLlK1k0KOnWTQtGcA7pnfP-gzGzoHsz",
+        appKey: "3x2y811wfs2AtVQEz7kKeMhL",
+        avatar:"mm",
+        placeholder: "say somethings ?",
+        guest_info:guest_info,
+        pageSize:"10"
+    })
+</script>
+ 
+</body>
+</html>
