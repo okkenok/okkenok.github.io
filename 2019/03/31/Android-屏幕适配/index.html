@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="dp 直接适配dp 是什么？dp 指的是设备独立像素，以 dp 为尺寸单位的控件，在不同分辨率和尺寸的手机上代表了不同的真实像素。  px = dp * (dpi / 160)  dpi 是什么？dpi 是像素密度，指的是在系统软件上指定的单位尺寸的像素数量，它往往是写在系统出厂配置文件的一个固定值。 我为什么要强调它是软件系统上的概念？因为大家买手机的时候，往往会听到另一个叫 ppi 的参数，这">
+<meta name="keywords" content="Android 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 屏幕适配">
+<meta property="og:url" content="http://yoursite.com/2019/03/31/Android-屏幕适配/index.html">
+<meta property="og:site_name" content="Okkenok">
+<meta property="og:description" content="dp 直接适配dp 是什么？dp 指的是设备独立像素，以 dp 为尺寸单位的控件，在不同分辨率和尺寸的手机上代表了不同的真实像素。  px = dp * (dpi / 160)  dpi 是什么？dpi 是像素密度，指的是在系统软件上指定的单位尺寸的像素数量，它往往是写在系统出厂配置文件的一个固定值。 我为什么要强调它是软件系统上的概念？因为大家买手机的时候，往往会听到另一个叫 ppi 的参数，这">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/13/163f4d6fe59be47d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/12/163f4802fbef23d0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/13/163f4f9e227a1bb4?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:image" content="https://user-gold-cdn.xitu.io/2018/6/11/163ea6e3fcb3a835?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+<meta property="og:updated_time" content="2019-03-31T05:26:42.852Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 屏幕适配">
+<meta name="twitter:description" content="dp 直接适配dp 是什么？dp 指的是设备独立像素，以 dp 为尺寸单位的控件，在不同分辨率和尺寸的手机上代表了不同的真实像素。  px = dp * (dpi / 160)  dpi 是什么？dpi 是像素密度，指的是在系统软件上指定的单位尺寸的像素数量，它往往是写在系统出厂配置文件的一个固定值。 我为什么要强调它是软件系统上的概念？因为大家买手机的时候，往往会听到另一个叫 ppi 的参数，这">
+<meta name="twitter:image" content="https://user-gold-cdn.xitu.io/2018/6/13/163f4d6fe59be47d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Android 屏幕适配</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" href="/2019/03/31/Android-性能优化/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" href="/2019/03/31/Android-之-LruCache/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/31/Android-屏幕适配/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&text=Android 屏幕适配"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&is_video=false&description=Android 屏幕适配"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android 屏幕适配&body=Check out this article: http://yoursite.com/2019/03/31/Android-屏幕适配/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&name=Android 屏幕适配&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dp-直接适配"><span class="toc-number">1.</span> <span class="toc-text">dp 直接适配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#dp-是什么？"><span class="toc-number">1.1.</span> <span class="toc-text">dp 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dpi-是什么？"><span class="toc-number">1.2.</span> <span class="toc-text">dpi 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-number">1.3.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#宽高限定符适配"><span class="toc-number">2.</span> <span class="toc-text">宽高限定符适配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题-1"><span class="toc-number">2.1.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UI-适配框架"><span class="toc-number">3.</span> <span class="toc-text">UI 适配框架</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallestWidth-适配"><span class="toc-number">4.</span> <span class="toc-text">smallestWidth 适配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#今日头条适配方案"><span class="toc-number">5.</span> <span class="toc-text">今日头条适配方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考引用"><span class="toc-number">6.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Android 屏幕适配
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Okkenok</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-03-31T05:26:19.000Z" itemprop="datePublished">2019-03-31</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android-面试/">Android 面试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="dp-直接适配"><a href="#dp-直接适配" class="headerlink" title="dp 直接适配"></a>dp 直接适配</h1><h2 id="dp-是什么？"><a href="#dp-是什么？" class="headerlink" title="dp 是什么？"></a>dp 是什么？</h2><p>dp 指的是设备独立像素，以 dp 为尺寸单位的控件，在不同分辨率和尺寸的手机上代表了不同的真实像素。</p>
+<blockquote>
+<p>px = dp * (dpi / 160)</p>
+</blockquote>
+<h2 id="dpi-是什么？"><a href="#dpi-是什么？" class="headerlink" title="dpi 是什么？"></a>dpi 是什么？</h2><p>dpi 是像素密度，指的是在<strong>系统软件上</strong>指定的单位尺寸的像素数量，它往往是写在系统出厂配置文件的一个固定值。</p>
+<p>我为什么要强调它是软件系统上的概念？因为大家买手机的时候，往往会听到另一个叫 ppi 的参数，这个在手机屏幕终止的也是像素密度，但是这个是物理上的概念，它是客观存在的不会改变。dpi 是软件参考了物理像素密度后，人为指定的一个值，这样保证了某一个区间内的物理像素密度在软件上使用同一个值。这样有利于我们的 UI 适配。</p>
+<p>比如，几部相同分辨率不同尺寸的手机的 ppi 可能分别是 430、440、450，那么在 Android 系统中，可能 dpi 会全部指定为 480，这样的话 dpi / 160 就会是一个相对固定的值，这样就能保证相同分辨率下不同尺寸的手机表现一致。</p>
+<blockquote>
+<p>查看设备 dpi：ro.sf.lcd_density=160</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> adb shell</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> cat system/build.prop</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>而在不同分辨率下，dpi 将会不同，比如</p>
+<table>
+<thead>
+<tr>
+<th>…</th>
+<th>1080*720</th>
+<th>1920*1080</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dpi</td>
+<td>320</td>
+<td>480</td>
+</tr>
+<tr>
+<td>dpi / 160</td>
+<td>2</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>根据上面的表格，720P 和 1080P 的手机，dpi 是不同的，这也就意味着，不同的分辨率中，1dp 对应不同数量的 px，这也就是，当我们使用 dp 来定义一个控件大小的时候，在不同手机里会表现出相应大小的像素值。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/6/13/163f4d6fe59be47d?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="例子"></p>
+<p>可以说，<strong>通过 dp 加上自适应布局和 weight 比例布局</strong>可以基本解决不同手机上的适配问题，这基本是最原始的 Android 适配方案。</p>
+<p>这种方式存在两个小问题：</p>
+<ol>
+<li>只能保证适配绝大部分手机，部分手机仍然需要单独适配。因为并不是所有的 1080P 的手机 dpi 都是 480，比如 Google 的 Pixel2 （1920 * 1080）</li>
+<li>无法快速高效的吧设计师的设计稿实现到布局代码中，通过 dp 直接适配，我们只能让 UI 基本适配不同的手机，但是在设计图和 UI 代码之间的鸿沟，dp 是无法解决的，因为 dp 不是真实像素。在把设计稿向 UI 代码转换的过程中，我们需要耗费相当的精力去转换尺寸，这会极大的降低我们的生产力，拉低开发效率。</li>
+</ol>
+<h1 id="宽高限定符适配"><a href="#宽高限定符适配" class="headerlink" title="宽高限定符适配"></a>宽高限定符适配</h1><p>简单说，及时穷举市面上所有的 Android 手机的宽高像素值</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/6/12/163f4802fbef23d0?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="宽高限定符适配"></p>
+<p>设定一个基准的分辨率，其他分辨率都根据这个基准分辨率来计算，在不同的尺寸文件夹内部，根据该尺寸编写对应的 dimens 文件。</p>
+<p>比如以 480 × 320 为基准分辨率</p>
+<ul>
+<li>宽度为 320，将任何分辨率的宽度整分为 320 份，取值为 x1 ~ x320</li>
+<li>高度为 480，将任何分辨率的高度整分为 480 份，取值为 y1 ~ y480</li>
+</ul>
+<p>那么对于 800 * 480 分辨率的 dimens 文件来说，</p>
+<ul>
+<li>x1 = (480 / 320) * 1 = 1.5px</li>
+<li>x2 = (480 / 320) * 2 = 3px</li>
+<li>…</li>
+</ul>
+<p><img src="https://user-gold-cdn.xitu.io/2018/6/13/163f4f9e227a1bb4?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="eg"></p>
+<p>这个时候，如果我们的 UI 设计界面使用的就是基准分辨率，那么我们就可以按照设计稿上的尺寸填写相对应的 dimens 引用了，而当 APP 运行在不同分辨率的手机时，这些系统会根据这些 dimens 引用去该分辨率的文件夹下寻找对应的值。这样基本解决了我们的适配问题，而且极大地提高了我们 UI 开发的效率。</p>
+<h2 id="问题-1"><a href="#问题-1" class="headerlink" title="问题"></a>问题</h2><p>需要精准命中才能适配，否则就只能用统一的默认的 dimens 文件了。容错机制较差。</p>
+<h1 id="UI-适配框架"><a href="#UI-适配框架" class="headerlink" title="UI 适配框架"></a>UI 适配框架</h1><p><a href="https://github.com/JessYanCoding/AndroidAutoSize" target="_blank" rel="noopener">AndroidAutoSize</a></p>
+<h1 id="smallestWidth-适配"><a href="#smallestWidth-适配" class="headerlink" title="smallestWidth 适配"></a>smallestWidth 适配</h1><p>或者叫做 sw 限定符适配。指的是 Android 会识别<strong>屏幕可用高度和宽度的最小尺寸</strong>的 dp 值（其实就是手机的宽度值），然后根据识别到的结果去资源文件中寻找对应的限定符的文件夹下的资源文件。</p>
+<p>这种机制和上文提到的宽高限定符适配原理是一样的，都是系统通过特定的规则来选择对应的文件。</p>
+<p>举个例子，小米 5 的 dpi 是480，横向像素是 1080 px，根据 px = dp(dpi / 160)，横向的 dp 值是 360 dp，系统会去寻找是否存在 value-sw360dp 的文件夹以及对应的资源文件。</p>
+<p><img src="https://user-gold-cdn.xitu.io/2018/6/11/163ea6e3fcb3a835?imageView2/0/w/1280/h/960/format/webp/ignore-error/1" alt="smallesWidth 文件夹"></p>
+<p>smallestWidth 限定符和宽高限定符适配最大的区别在于，前者有很好的容错机制，如果没有 value-sw360dp 文件夹，系统会向下寻找，比如离 360dp 最近的只有 value-sw350dp，那么 Android 就会选择此文件夹下面的资源文件。这个特性就完美的解决了上文提到的宽高限定符的容错问题。</p>
+<p>最低支持版本 4.0 了；多个 dimens 文件可能导致 apk 变大</p>
+<h1 id="今日头条适配方案"><a href="#今日头条适配方案" class="headerlink" title="今日头条适配方案"></a>今日头条适配方案</h1><p><a href="https://zhuanlan.zhihu.com/p/37199709" target="_blank" rel="noopener">今日头条适配方案</a></p>
+<h1 id="参考引用"><a href="#参考引用" class="headerlink" title="参考引用"></a>参考引用</h1><p><a href="https://juejin.im/post/5ae9cc3a5188253dc612842b" target="_blank" rel="noopener">Android 目前最稳定和高效的UI适配方案</a></p>
+
+  </div>
+</article>
+
+	<div class="blog-post-comments">
+        
+        
+        <div class="vcomment"></div>
+        
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#dp-直接适配"><span class="toc-number">1.</span> <span class="toc-text">dp 直接适配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#dp-是什么？"><span class="toc-number">1.1.</span> <span class="toc-text">dp 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dpi-是什么？"><span class="toc-number">1.2.</span> <span class="toc-text">dpi 是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#问题"><span class="toc-number">1.3.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#宽高限定符适配"><span class="toc-number">2.</span> <span class="toc-text">宽高限定符适配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#问题-1"><span class="toc-number">2.1.</span> <span class="toc-text">问题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UI-适配框架"><span class="toc-number">3.</span> <span class="toc-text">UI 适配框架</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#smallestWidth-适配"><span class="toc-number">4.</span> <span class="toc-text">smallestWidth 适配</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#今日头条适配方案"><span class="toc-number">5.</span> <span class="toc-text">今日头条适配方案</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考引用"><span class="toc-number">6.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/03/31/Android-屏幕适配/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&text=Android 屏幕适配"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&is_video=false&description=Android 屏幕适配"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Android 屏幕适配&body=Check out this article: http://yoursite.com/2019/03/31/Android-屏幕适配/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&title=Android 屏幕适配"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/03/31/Android-屏幕适配/&name=Android 屏幕适配&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 黄耿
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script type="text/javascript">
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+      return GUEST_INFO.indexOf(item) > -1
+    });
+    guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "QkzLlK1k0KOnWTQtGcA7pnfP-gzGzoHsz",
+        appKey: "3x2y811wfs2AtVQEz7kKeMhL",
+        avatar:"mm",
+        placeholder: "say somethings ?",
+        guest_info:guest_info,
+        pageSize:"10"
+    })
+</script>
+ 
+</body>
+</html>
