@@ -163,7 +163,7 @@
 <p>比如，几部相同分辨率不同尺寸的手机的 ppi 可能分别是 430、440、450，那么在 Android 系统中，可能 dpi 会全部指定为 480，这样的话 dpi / 160 就会是一个相对固定的值，这样就能保证相同分辨率下不同尺寸的手机表现一致。</p>
 <blockquote>
 <p>查看设备 dpi：ro.sf.lcd_density=160</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> adb shell</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> cat system/build.prop</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span> adb shell</span><br><span class="line"><span class="meta">&gt;</span> cat system/build.prop</span><br><span class="line"><span class="meta">&gt;</span></span><br></pre></td></tr></table></figure>
 </blockquote>
 <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>而在不同分辨率下，dpi 将会不同，比如</p>
 <table>
