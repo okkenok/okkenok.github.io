@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang=en>
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Git 使用规范流程下面是 ThoughtBot 的 Git 的使用规范流程：  第一步：新建分支首先，每次开发新功能，都应该新建一个单独的分支 123456# 获取主干最新代码$ git checkout master$ git pull# 新建一个开发分支 myfeature$ git checkout -b myfeature  分支管理策略  主分支 Master 开发分支 Develop">
+<meta name="keywords" content="Android 面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 的使用">
+<meta property="og:url" content="http://yoursite.com/2019/04/16/Git-的使用/index.html">
+<meta property="og:site_name" content="Okkenok">
+<meta property="og:description" content="Git 使用规范流程下面是 ThoughtBot 的 Git 的使用规范流程：  第一步：新建分支首先，每次开发新功能，都应该新建一个单独的分支 123456# 获取主干最新代码$ git checkout master$ git pull# 新建一个开发分支 myfeature$ git checkout -b myfeature  分支管理策略  主分支 Master 开发分支 Develop">
+<meta property="og:locale" content="en">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015080501.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015122302.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015122305.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015122306.png">
+<meta property="og:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015122307.png">
+<meta property="og:updated_time" content="2019-04-16T14:37:25.436Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Git 的使用">
+<meta name="twitter:description" content="Git 使用规范流程下面是 ThoughtBot 的 Git 的使用规范流程：  第一步：新建分支首先，每次开发新功能，都应该新建一个单独的分支 123456# 获取主干最新代码$ git checkout master$ git pull# 新建一个开发分支 myfeature$ git checkout -b myfeature  分支管理策略  主分支 Master 开发分支 Develop">
+<meta name="twitter:image" content="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015080501.png">
+    
+    
+        
+          
+              <link rel="shortcut icon" href="/images/favicon.ico">
+          
+        
+        
+          
+            <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+          
+        
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+          
+        
+    
+    <!-- title -->
+    <title>Git 的使用</title>
+    <!-- styles -->
+    <link rel="stylesheet" href="/css/style.css">
+    <!-- persian styles -->
+    
+      <link rel="stylesheet" href="/css/rtl.css">
+    
+    <!-- rss -->
+    
+    
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </span>
+    <br>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" href="/2019/04/07/关于-Retorfit/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/04/16/Git-的使用/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/04/16/Git-的使用/&text=Git 的使用"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/04/16/Git-的使用/&is_video=false&description=Git 的使用"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git 的使用&body=Check out this article: http://yoursite.com/2019/04/16/Git-的使用/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/04/16/Git-的使用/&name=Git 的使用&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-使用规范流程"><span class="toc-number">1.</span> <span class="toc-text">Git 使用规范流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：新建分支"><span class="toc-number">1.1.</span> <span class="toc-text">第一步：新建分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：提交分支-commit"><span class="toc-number">1.2.</span> <span class="toc-text">第二步：提交分支 commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：撰写提交信息"><span class="toc-number">1.3.</span> <span class="toc-text">第三步：撰写提交信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四步：与主干同步"><span class="toc-number">1.4.</span> <span class="toc-text">第四步：与主干同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第五步：合并-commit"><span class="toc-number">1.5.</span> <span class="toc-text">第五步：合并 commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第六步：推送到远程仓库"><span class="toc-number">1.6.</span> <span class="toc-text">第六步：推送到远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第七步：发出-Pull-Request"><span class="toc-number">1.7.</span> <span class="toc-text">第七步：发出 Pull Request</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用-Git-命令清单"><span class="toc-number">2.</span> <span class="toc-text">常用 Git 命令清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-远程操作详解"><span class="toc-number">3.</span> <span class="toc-text">Git 远程操作详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-clone"><span class="toc-number">3.1.</span> <span class="toc-text">git clone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-remote"><span class="toc-number">3.2.</span> <span class="toc-text">git remote</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-fetch"><span class="toc-number">3.3.</span> <span class="toc-text">git fetch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-pull"><span class="toc-number">3.4.</span> <span class="toc-text">git pull</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-push"><span class="toc-number">3.5.</span> <span class="toc-text">git push</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-工作流程"><span class="toc-number">4.</span> <span class="toc-text">Git 工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#功能驱动"><span class="toc-number">4.1.</span> <span class="toc-text">功能驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-flow"><span class="toc-number">4.2.</span> <span class="toc-text">Git flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特点"><span class="toc-number">4.2.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#评价"><span class="toc-number">4.2.2.</span> <span class="toc-text">评价</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Github-flow"><span class="toc-number">4.3.</span> <span class="toc-text">Github flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流程"><span class="toc-number">4.3.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#评价-1"><span class="toc-number">4.3.2.</span> <span class="toc-text">评价</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gitlab-flow"><span class="toc-number">4.4.</span> <span class="toc-text">Gitlab flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#上游优先"><span class="toc-number">4.4.1.</span> <span class="toc-text">上游优先</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#持续发布"><span class="toc-number">4.4.2.</span> <span class="toc-text">持续发布</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本发布"><span class="toc-number">4.4.3.</span> <span class="toc-text">版本发布</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">5.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Git 的使用
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Okkenok</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-04-16T14:36:34.000Z" itemprop="datePublished">2019-04-16</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link" href="/tags/Android-面试/">Android 面试</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="Git-使用规范流程"><a href="#Git-使用规范流程" class="headerlink" title="Git 使用规范流程"></a>Git 使用规范流程</h2><p>下面是 <a href="https://github.com/thoughtbot/guides/tree/master/protocol/git" target="_blank" rel="noopener">ThoughtBot</a> 的 Git 的使用规范流程：</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015080501.png" alt="img"></p>
+<h3 id="第一步：新建分支"><a href="#第一步：新建分支" class="headerlink" title="第一步：新建分支"></a>第一步：新建分支</h3><p>首先，每次开发新功能，都应该新建一个单独的分支</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 获取主干最新代码</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout master</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 新建一个开发分支 myfeature</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git checkout -b myfeature</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>分支管理策略</p>
+<ol>
+<li>主分支 Master</li>
+<li>开发分支 Develop</li>
+</ol>
+<p>这个分支可以用来生成代码的最新隔夜版本（nightly）。如果想正式对外发布，就在 Master 分支上，对 Develop 分支进行“合并”（merge）。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 创建 develop 分支</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout -b develop master</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 切换至 master 分支</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout master</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment"># 对 develop 分支进行合并</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git merge --no-ff develop</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> </span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> <span class="comment">## --no-ff 默认情况为“快进式合并”（fast-farward merge），会直接将 master 分支指向 develop 分支；使用 --no-ff 参数会执行正常合并，在 master 分支上生成一个新节点，保证了版本演进的清晰</span></span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li>临时性分支</li>
+</ol>
+<p>应对一些特定目的的版本开发，临时性分支主要有：功能分支（feature）、预发布分支（release）、修补 bug（fixbug）。为临时需要，使用完以后应该删除。</p>
+<ol start="4">
+<li>功能分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> git check out -b feature-x develop</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> </span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git check out develop</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git merge --no-ff feature-x</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> </span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git branch -d feature-x</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ol start="5">
+<li>预发布分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout -b release-1.2 develop</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> </span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout master</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git merge --no-ff release-1.2</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git tag -a 1.2</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout develop</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git merge --no-ff release-1.2</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git branch -d release-1.2</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+<ol start="6">
+<li>修补 bug 分支</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout -b fixbug-0.1 master</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> </span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout master</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git merge --no-ff fixbug-0.1</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git tag -a 0.1.1</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> </span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git checkout develop</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git merge --no-ff fixbug-0.1</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> </span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"> git branch -d fixbug-0.1</span></span><br><span class="line"><span class="meta">&gt;</span><span class="bash"></span></span><br></pre></td></tr></table></figure>
+</blockquote>
+<blockquote>
+</blockquote>
+<h3 id="第二步：提交分支-commit"><a href="#第二步：提交分支-commit" class="headerlink" title="第二步：提交分支 commit"></a>第二步：提交分支 commit</h3><p>分支修改后，就可以提交 commit 了。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git add --all</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git status</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git git commit --verbose</span></span><br></pre></td></tr></table></figure>
+<h3 id="第三步：撰写提交信息"><a href="#第三步：撰写提交信息" class="headerlink" title="第三步：撰写提交信息"></a>第三步：撰写提交信息</h3><p>提交 commit 时，必须给出完整扼要的提交信息，下面是一个范本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Present-tense summary under 50 characters</span><br><span class="line"></span><br><span class="line">* More information about commit (under 72 characters).</span><br><span class="line">* More information about commit (under 72 characters).</span><br><span class="line"></span><br><span class="line">http://project.management-system.com/ticket/123</span><br></pre></td></tr></table></figure>
+<p>第一行是不超过50个字的提要，然后空一行，罗列出改动原因、主要变动、以及需要注意的问题。最后，提供对应的网址（比如 bug ticket）。</p>
+<h3 id="第四步：与主干同步"><a href="#第四步：与主干同步" class="headerlink" title="第四步：与主干同步"></a>第四步：与主干同步</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git fetch origin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git rebase origin/master</span></span><br></pre></td></tr></table></figure>
+<h3 id="第五步：合并-commit"><a href="#第五步：合并-commit" class="headerlink" title="第五步：合并 commit"></a>第五步：合并 commit</h3><p>分支开发完，很可能有一堆 commit，但是合并到主干的时候，往往希望只有一个（或最多两三个）commit，这样不仅清晰，也容易管理。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git rebase -i origin/master</span></span><br></pre></td></tr></table></figure>
+<p><code>git rebase</code>命令的参数<code>i</code>表示互动（interactive），这时 git 会打开一个互动界面，进行下一步操作。下面为 [Tute Costa] 的例子：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">pick 07c5abd Introduce OpenPGP and teach basic usage</span><br><span class="line">pick de9b1eb Fix PostChecker::Post#urls</span><br><span class="line">pick 3e7ee36 Hey kids, stop all the highlighting</span><br><span class="line">pick fa20af3 git interactive rebase, squash, amend</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> Rebase 8db7e8b..fa20af3 onto 8db7e8b</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Commands:</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  p, pick = use commit</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  r, reword = use commit, but edit the commit message</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  e, edit = use commit, but stop <span class="keyword">for</span> amending</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  s, squash = use commit, but meld into previous commit</span></span><br><span class="line"><span class="meta">#</span><span class="bash">  f, fixup = like <span class="string">"squash"</span>, but discard this commit<span class="string">'s log message</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">  x, <span class="built_in">exec</span> = run <span class="built_in">command</span> (the rest of the line) using shell</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> These lines can be re-ordered; they are executed from top to bottom.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> If you remove a line here THAT COMMIT WILL BE LOST.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> However, <span class="keyword">if</span> you remove everything, the rebase will be aborted.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Note that empty commits are commented out</span></span><br></pre></td></tr></table></figure>
+<p>上面的互动界面中，先列出当前分支的最新的4个 commit（越下面越新）。每个 commit 前面有一个操作命令，默认是 pick，表示该行 commit 被选中，要进行 rebase 操作。</p>
+<p>下面是可以使用的命令：</p>
+<blockquote>
+<ul>
+<li>pick：正常选中</li>
+<li>reword：选中，并且修改提交信息</li>
+<li>edit：选中，rebase 时会暂停，允许你修改这个 commit</li>
+<li>squash：选中，会将当前 commit 与上一个 commit 合并</li>
+<li>fixup：与 squash 相同，但不会保存当前 commit 的提交信息</li>
+<li>exec：执行其他 shell 命令</li>
+</ul>
+</blockquote>
+<p>上面这 6 个命令当中，squash 和 fixup 可以用来合并 commit。先把需要合并的 commit 前面的动词，改成 squash （或者 s）。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pick 07c5abd Introduce OpenPGP and teach basic usage</span><br><span class="line">s de9b1eb Fix PostChecker::Post#urls</span><br><span class="line">s 3e7ee36 Hey kids, stop all the highlighting</span><br><span class="line">pick fa20af3 git interactive rebase, squash, amend</span><br></pre></td></tr></table></figure>
+<p>这样一改，执行后，当前分支只会剩下两个 commit。第二行和第三行的 commit，都会合并到第一行的 commit。提交信息会同时包含，这三个 commit 的提交信息。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> This is a combination of 3 commits.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> The first commit<span class="string">'s message is:</span></span></span><br><span class="line">Introduce OpenPGP and teach basic usage</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> This is the 2nd commit message:</span></span><br><span class="line">Fix PostChecker::Post#urls</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> This is the 3rd commit message:</span></span><br><span class="line">Hey kids, stop all the highlighting</span><br></pre></td></tr></table></figure>
+<p>如果将第三行的 squash 命令改成 fixup 命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pick 07c5abd Introduce OpenPGP and teach basic usage</span><br><span class="line">s de9b1eb Fix PostChecker::Post#urls</span><br><span class="line">f 3e7ee36 Hey kids, stop all the highlighting</span><br><span class="line">pick fa20af3 git interactive rebase, squash, amend</span><br></pre></td></tr></table></figure>
+<p>运行结果相同，但新的提交信息里面，第三行 commit 的提交信息会被注释掉。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> This is a combination of 3 commits.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> The first commit<span class="string">'s message is:</span></span></span><br><span class="line">Introduce OpenPGP and teach basic usage</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> This is the 2nd commit message:</span></span><br><span class="line">Fix PostChecker::Post#urls</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> This is the 3rd commit message:</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> Hey kids, stop all the highlighting</span></span><br></pre></td></tr></table></figure>
+<p><a href="http://ponyfoo.com/articles/git-github-hacks" target="_blank" rel="noopener">Pony Foo</a> 提出了另一种合并 commit 的简便方法，就是先撤销过去5个 commit，然后再建一个新的。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git reset HEAD~5</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git add .</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git commit -am <span class="string">"Here's the bug fix that closes #28"</span></span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push --force</span></span><br></pre></td></tr></table></figure>
+<p>squash 和 fixup 命令，还可以当做命令行参数使用，自动合并 commit</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git commit --fixup</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git rebase -i --autosquash</span></span><br></pre></td></tr></table></figure>
+<h3 id="第六步：推送到远程仓库"><a href="#第六步：推送到远程仓库" class="headerlink" title="第六步：推送到远程仓库"></a>第六步：推送到远程仓库</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push --force origin myfeature</span></span><br></pre></td></tr></table></figure>
+<p><code>git push</code>命令要加上force参数，因为<code>rebase</code>以后，分支历史改变了，跟远程分支不一定兼容，有可能要强行推送。</p>
+<h3 id="第七步：发出-Pull-Request"><a href="#第七步：发出-Pull-Request" class="headerlink" title="第七步：发出 Pull Request"></a>第七步：发出 Pull Request</h3><p>提交到远程仓库后，就可以发出 Pull Request 到 master 分支，然后请求别人进行代码 review，确认可以合并到 master。</p>
+<h2 id="常用-Git-命令清单"><a href="#常用-Git-命令清单" class="headerlink" title="常用 Git 命令清单"></a><a href="http://www.ruanyifeng.com/blog/2015/12/git-cheat-sheet.html" target="_blank" rel="noopener">常用 Git 命令清单</a></h2><h2 id="Git-远程操作详解"><a href="#Git-远程操作详解" class="headerlink" title="Git 远程操作详解"></a>Git 远程操作详解</h2><h3 id="git-clone"><a href="#git-clone" class="headerlink" title="git clone"></a><code>git clone</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> &lt;版本库地址&gt; &lt;本地目录名&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-remote"><a href="#git-remote" class="headerlink" title="git remote"></a><code>git remote</code></h3><p>为了便于管理，Git 要求每个远程主机都必须指定一个主机名，默认为 master。<code>git remote</code>命令就用于管理主机名。</p>
+<p>不带选项的时候，<code>git remote</code>命令列出所有远程主机</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git remote</span></span><br><span class="line">origin</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用`-v`选项，可以参看远程主机的网址。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote -v</span></span><br><span class="line">origin  git@github.com:jquery/jquery.git (fetch)</span><br><span class="line">origin  git@github.com:jquery/jquery.git (push)</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 指定远程主机名为 jQuery</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git <span class="built_in">clone</span> -o jQuery https://github.com/jquery/jquery.git</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote</span></span><br><span class="line">jQuery</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 查看该主机的详细信息</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote show &lt;主机名&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 添加远程主机</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote add &lt;主机名&gt; &lt;网址&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 删除远程主机</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote rm &lt;主机名&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 远程主机的改名</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git remote rename &lt;原主机名&gt; &lt;新主机名&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-fetch"><a href="#git-fetch" class="headerlink" title="git fetch"></a><code>git fetch</code></h3><p>一旦远程主机的版本有了更新（Git 术语叫做 commit），需要将这些更新取回本地，这时就要用到<code>git fetch</code>命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git fetch &lt;远程主机名&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>git fetch</code>命令通常用来查看其他人的进程，因为它取回的代码对你本地的开发代码没有影响。</p>
+<p>默认情况下，<code>get fetch</code>取回所有分支（branch）的更新。如果只想取回特定分支的更新，可以指定分支名。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git fetch &lt;远程主机名&gt; &lt;分支名&gt;</span></span><br></pre></td></tr></table></figure>
+<p>所取回的更新，在本地主机上要用“远程主机名/分支名”的形式读取。比如<code>origin</code>主机的<code>master</code> ，就要用<code>origin/master</code>读取。</p>
+<p><code>git branch</code>命令的<code>-r</code>选项，可以用来查看远程分支，<code>-a</code>选项查看所有分支。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git branch -r</span></span><br><span class="line">origin/master</span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch -a</span></span><br><span class="line">* master</span><br><span class="line">  remotes/origin/master</span><br></pre></td></tr></table></figure>
+<p>上面命令表示，本机主机的当前分支是<code>master</code>，远程分支是<code>origin/master</code>。</p>
+<p>取回远程主机的更新以后，可以在它的基础上，使用<code>git checkout</code>命令创建一个新的分支。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git checkout -b newBranch origin/master</span></span><br></pre></td></tr></table></figure>
+<p>上面命令表示，在<code>origin/master</code>的基础上，创建一个新分支。</p>
+<p>此外，也可以使用<code>git merge</code>命令或者<code>git rebase</code>命令，在本地分支上合并远程分支。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git merge origin/master</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 或者</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git rebase origin/master</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-pull"><a href="#git-pull" class="headerlink" title="git pull"></a><code>git pull</code></h3><p><code>git pull</code>作用是取回远程主机某个分支的更新，再与本地的指定分支合并。它的完整格式稍稍有点复杂。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git pull &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 与当前分支合并</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull origin next</span></span><br></pre></td></tr></table></figure>
+<p>上面命令表示，取回<code>origin/next</code>分支，再与当前分支合并。实质上，这等同于先做<code>git fetch</code>，再做<code>git merge</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git fetch origin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git merge origin/next</span></span><br></pre></td></tr></table></figure>
+<p>在某些场合，Git 会自动在本地分支与远程分支之间，建立一种追踪关系（tracking）。比如，在<code>git clone</code>的时候，所有本地分支默认与远程主机的同名分支建立追踪关系，也就是说，本地的<code>master</code>分支自动追踪<code>origin/master</code>分支</p>
+<p>Git 也允许手动建立追踪关系</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 指定`master`分支追踪`origin/next`分支</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git branch --<span class="built_in">set</span>-upstream master origin/next</span></span><br></pre></td></tr></table></figure>
+<p>如果当前分支与远程分支存在追踪关系，<code>git pull</code>就可以省略远程分支名。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git pull origin</span></span><br></pre></td></tr></table></figure>
+<p>如果当前分支只有一个追踪分支，连远程主机名都可以省略。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 自动与唯一一个追踪分支进行合并。</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git pull</span></span><br></pre></td></tr></table></figure>
+<p>如果合并需要采用 rebase 模式，可以使用<code>--rebase</code>选项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git pull --rebase &lt;远程主机名&gt; &lt;远程分支名&gt;:&lt;本地分支名&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果远程主机删除了某个分支，默认情况下，<code>git pull</code>不会再拉取远程分支的时候，删除对应的本地分支。这是为了防止，由于其他人操作了远程主机，导致<code>git pull</code>不知不觉删除了本地分支。</p>
+<p>但是，你可以改变这个行为，加上参数<code>-p</code>就会在本地删除远程已经删除的分支。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git pull -p</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 等同下面的命令</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git fetch --prune origin</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git fetch -p</span></span><br></pre></td></tr></table></figure>
+<h3 id="git-push"><a href="#git-push" class="headerlink" title="git push"></a><code>git push</code></h3><p><code>git push</code>命令用于将本地分支的更新推送到远程主机。它的格式与<code>git pull</code>命令相仿。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push &lt;远程主机名&gt; &lt;本地分支名&gt;:&lt;远程分支名&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 存在追踪关系</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin master</span></span><br></pre></td></tr></table></figure>
+<p>如果省略本地分支名，则表示删除指定的远程分支，因为这等同于推送一个空的本地分支到远程分支。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push origin :master</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 等同于</span></span><br><span class="line"><span class="meta">$</span><span class="bash"> git push origin --delete master</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> 表示删除 origin 主机的 master 分支</span></span><br></pre></td></tr></table></figure>
+<p>如果当前分支与远程分支之间存在追踪关系，则本地分支和远程分支都可以省略。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push origin</span></span><br></pre></td></tr></table></figure>
+<p>如果当前分支只有一个追踪分支，那么主机名都可以省略。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push</span></span><br></pre></td></tr></table></figure>
+<p>如果当前分支与多个主机存在追踪关系，则可以使用<code>-u</code>选项指定一个默认主机。这样后面就可以不加任何参数使用<code>git push</code>。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push -u origin master</span></span><br></pre></td></tr></table></figure>
+<p>不带任何参数的<code>git push</code>，默认只推送当前分支，这叫做 simple 方式。此外，还有一种 matching 方式，会推送所有有对应的远程分支的本地分支。Git 2.0 版本之前，默认采用 matching 方式，现在改为默认采用 simple 方式。如果要修改这个设置，可以采用<code>git config</code>命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git config --global push.default matching</span></span><br><span class="line"></span><br><span class="line"><span class="meta">$</span><span class="bash"> git config --global push.default simple</span></span><br></pre></td></tr></table></figure>
+<p>还有一种情况，就是不管是否存在对应的远程分支，将本地的所有分支都推送到远程主机，这时需要使用<code>--all</code>选项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push --all origin</span></span><br></pre></td></tr></table></figure>
+<p>如果远程主机的版本比本地版本更新，推送时 Git 会报错，要求先本地做<code>git pull</code>合并差异，再推送到远程主机。这时，如果你一定要推送，可以使用<code>--force</code>选项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push --force origin</span></span><br></pre></td></tr></table></figure>
+<p>上面命令使用<code>--force</code>选项，结果导致远程主机上更新的版本被覆盖！除非你很确定要这样做，否则应该尽量避免使用<code>--force</code>选项。</p>
+<p>最后，<code>git push</code>不会推送标签（tag），除非使用<code>--tags</code>选项。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> git push origin --tags</span></span><br></pre></td></tr></table></figure>
+<h2 id="Git-工作流程"><a href="#Git-工作流程" class="headerlink" title="Git 工作流程"></a>Git 工作流程</h2><blockquote>
+<ul>
+<li>git flow</li>
+<li>github flow</li>
+<li>gitlab flow</li>
+</ul>
+</blockquote>
+<h3 id="功能驱动"><a href="#功能驱动" class="headerlink" title="功能驱动"></a>功能驱动</h3><p>上述三种工作流程，都采用<a href="https://en.wikipedia.org/wiki/Feature-driven_development" target="_blank" rel="noopener">功能驱动式开发</a>，它指的是，需求是开发的起点，先有需求再有功能分支（feature branch）或者补丁分支（hotfix branch）。开发完成后，该分支就合并到主分支，然后被删除。</p>
+<h3 id="Git-flow"><a href="#Git-flow" class="headerlink" title="Git flow"></a>Git flow</h3><h4 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h4><p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015122302.png" alt="img"></p>
+<p>首先，项目存在两个长期分支：</p>
+<ul>
+<li>主分支 master</li>
+<li>开发分支 develop</li>
+</ul>
+<p>前者用于存放对外发布的版本，任何时候在这个分支拿到的，都是稳定的发布版；后者用于日常开发，存放最新的开发版。</p>
+<p>其次，项目存在三种短期分支：</p>
+<ul>
+<li>功能分支 feature branch</li>
+<li>补丁分支 hotfix branch</li>
+<li>预发分支 release branch</li>
+</ul>
+<p>一旦开发完成，他们就会被合并进 develop 或 master，然后被删除。</p>
+<h4 id="评价"><a href="#评价" class="headerlink" title="评价"></a>评价</h4><p>Git flow 的优点是清晰可控，缺点是相对复杂，需要同时维护两个长期分支。大多数工具都将 master 当做默认分支，可是开发是在 develop 分支进行的，这导致经常要切换分支，非常烦人。</p>
+<p>更大的问题在于，这个模式是基于“版本发布”的，目标是一段时间以后产出一个新版本。但是，很多网站项目是“持续发布”，代码一有改动，就部署一次。这时，master 分支 和 develop 分支的差别不大，没必要维护两个长期分支。</p>
+<h3 id="Github-flow"><a href="#Github-flow" class="headerlink" title="Github flow"></a>Github flow</h3><h4 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h4><p>它只有一个长期分支，就是 master。</p>
+<p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015122305.png" alt="img"></p>
+<ol>
+<li>根据需求，从 master 拉出新分支，不区分功能分支或补丁分支</li>
+<li>新分支开发完成后，或者需要讨论的时候，就向 master 发起一个<code>pull request</code>（简称 PR）</li>
+<li><code>pull request</code>既是一个通知，让别人注意到你的请求，又是一种对话机制，大家一起评审和讨论你的代码。对话过程中，你还可以不断提交代码。</li>
+<li>你的<code>pull request</code>被接受，合并进 master，重新部署后，原来你拉出来的那个分支就被删除（先部署再合并也可） </li>
+</ol>
+<h4 id="评价-1"><a href="#评价-1" class="headerlink" title="评价"></a>评价</h4><p>Github flow 的最大优点就是简单，对于“持续发布”的产品，可以说是最合适的流程。</p>
+<p>问题在于它的假设：master 分支的更新与产品的发布是一致的。也就是说，master 分支的最新代码，默认就是当前的线上代码。</p>
+<p>可是，有些时候并非如此，代码合并进入 master 分支，并不代表它就能立刻发布。比如，苹果商店的 App 提交审核以后，等一段时间才能上架。这时，如果还有新的代码提交，master 分支就会与刚发布的版本不一致。另一个例子是，有些公司有发布窗口，只有指定时间才能发布，这也会导致线上版本落后于 master 分支。</p>
+<p>上面这种情况，只有 master 一个主分支就不够用了。通常，你不得不在 master 分支以外，另外新建一个 production 分支跟踪线上版本。</p>
+<h3 id="Gitlab-flow"><a href="#Gitlab-flow" class="headerlink" title="Gitlab flow"></a>Gitlab flow</h3><h4 id="上游优先"><a href="#上游优先" class="headerlink" title="上游优先"></a>上游优先</h4><p>Gitlab flow 的最大原则叫做“上游优先”（upstream first），即只存在一个主分支 master，它是所有其他分支的“上游”。只有上游分支采纳的代码变化，才能应用到其他分支。</p>
+<h4 id="持续发布"><a href="#持续发布" class="headerlink" title="持续发布"></a>持续发布</h4><p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015122306.png" alt="img"></p>
+<p>对于“持续发布”的项目，它建议在 master 分支以外，再建立不同的环境分支。比如，“开发环境”的分支是 master，“预发环境”的分支是 pre-production，“生产环境”的分支是 production。</p>
+<p>开发分支是预发分支的“上游”，预发分支又是生产分支的“上游”。代码的变化，必须由“上游”向“下游”发展。比如，生产环境出现了 bug，这时就要新建一个功能分支，先把它合并到 master，确认没有问题，再 cherry-pick 到 pre-production，这一步也没有问题，才进入 production。</p>
+<p>只有紧急情况，才允许跳过上游，直接合并到下游分支。</p>
+<h4 id="版本发布"><a href="#版本发布" class="headerlink" title="版本发布"></a>版本发布</h4><p><img src="http://www.ruanyifeng.com/blogimg/asset/2015/bg2015122307.png" alt="img"></p>
+<p>对于“版本发布”的项目，建议的做法是每一个稳定版本，都要从 master 分支拉出一个分支，比如 2-3-stable、2-4-stable 等等。以后，只有修补 bug，才允许将代码合并到这些分支，并且此时要更新小版本号。</p>
+<hr>
+<h2 id="参考引用"><a href="#参考引用" class="headerlink" title="参考引用"></a>参考引用</h2><p><a href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html" target="_blank" rel="noopener">Git 工作流程</a></p>
+
+  </div>
+</article>
+
+	<div class="blog-post-comments">
+        
+        
+        <div class="vcomment"></div>
+        
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-使用规范流程"><span class="toc-number">1.</span> <span class="toc-text">Git 使用规范流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#第一步：新建分支"><span class="toc-number">1.1.</span> <span class="toc-text">第一步：新建分支</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第二步：提交分支-commit"><span class="toc-number">1.2.</span> <span class="toc-text">第二步：提交分支 commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第三步：撰写提交信息"><span class="toc-number">1.3.</span> <span class="toc-text">第三步：撰写提交信息</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第四步：与主干同步"><span class="toc-number">1.4.</span> <span class="toc-text">第四步：与主干同步</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第五步：合并-commit"><span class="toc-number">1.5.</span> <span class="toc-text">第五步：合并 commit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第六步：推送到远程仓库"><span class="toc-number">1.6.</span> <span class="toc-text">第六步：推送到远程仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#第七步：发出-Pull-Request"><span class="toc-number">1.7.</span> <span class="toc-text">第七步：发出 Pull Request</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#常用-Git-命令清单"><span class="toc-number">2.</span> <span class="toc-text">常用 Git 命令清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-远程操作详解"><span class="toc-number">3.</span> <span class="toc-text">Git 远程操作详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#git-clone"><span class="toc-number">3.1.</span> <span class="toc-text">git clone</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-remote"><span class="toc-number">3.2.</span> <span class="toc-text">git remote</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-fetch"><span class="toc-number">3.3.</span> <span class="toc-text">git fetch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-pull"><span class="toc-number">3.4.</span> <span class="toc-text">git pull</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#git-push"><span class="toc-number">3.5.</span> <span class="toc-text">git push</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git-工作流程"><span class="toc-number">4.</span> <span class="toc-text">Git 工作流程</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#功能驱动"><span class="toc-number">4.1.</span> <span class="toc-text">功能驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Git-flow"><span class="toc-number">4.2.</span> <span class="toc-text">Git flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#特点"><span class="toc-number">4.2.1.</span> <span class="toc-text">特点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#评价"><span class="toc-number">4.2.2.</span> <span class="toc-text">评价</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Github-flow"><span class="toc-number">4.3.</span> <span class="toc-text">Github flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#流程"><span class="toc-number">4.3.1.</span> <span class="toc-text">流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#评价-1"><span class="toc-number">4.3.2.</span> <span class="toc-text">评价</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gitlab-flow"><span class="toc-number">4.4.</span> <span class="toc-text">Gitlab flow</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#上游优先"><span class="toc-number">4.4.1.</span> <span class="toc-text">上游优先</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#持续发布"><span class="toc-number">4.4.2.</span> <span class="toc-text">持续发布</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#版本发布"><span class="toc-number">4.4.3.</span> <span class="toc-text">版本发布</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考引用"><span class="toc-number">5.</span> <span class="toc-text">参考引用</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" href="http://www.facebook.com/sharer.php?u=http://yoursite.com/2019/04/16/Git-的使用/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://twitter.com/share?url=http://yoursite.com/2019/04/16/Git-的使用/&text=Git 的使用"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.linkedin.com/shareArticle?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://pinterest.com/pin/create/bookmarklet/?url=http://yoursite.com/2019/04/16/Git-的使用/&is_video=false&description=Git 的使用"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Git 的使用&body=Check out this article: http://yoursite.com/2019/04/16/Git-的使用/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="https://getpocket.com/save?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://reddit.com/submit?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.stumbleupon.com/submit?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://digg.com/submit?url=http://yoursite.com/2019/04/16/Git-的使用/&title=Git 的使用"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="http://www.tumblr.com/share/link?url=http://yoursite.com/2019/04/16/Git-的使用/&name=Git 的使用&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy; 2019 黄耿
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a href="/about/">About</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+<link rel="stylesheet" href="/lib/justified-gallery/css/justifiedGallery.min.css">
+
+    <!-- jquery -->
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/justified-gallery/js/jquery.justifiedGallery.min.js"></script>
+<script src="/js/main.js"></script>
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- Valine Comments -->
+
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+<script type="text/javascript">
+    var notify = 'false' == true ? true : false;
+    var verify = 'false' == true ? true : false;
+    var GUEST_INFO = ['nick','mail','link'];
+    var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+      return GUEST_INFO.indexOf(item) > -1
+    });
+    guest_info = guest_info.length == 0 ? GUEST_INFO :guest_info;
+    new Valine({
+        el: '.vcomment',
+        notify: notify,
+        verify: verify,
+        appId: "QkzLlK1k0KOnWTQtGcA7pnfP-gzGzoHsz",
+        appKey: "3x2y811wfs2AtVQEz7kKeMhL",
+        avatar:"mm",
+        placeholder: "say somethings ?",
+        guest_info:guest_info,
+        pageSize:"10"
+    })
+</script>
+ 
+</body>
+</html>
